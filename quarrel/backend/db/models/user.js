@@ -1,13 +1,34 @@
-'use strict';
+"use strict";
 module.exports = (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
-    username: DataTypes.VARCHAR,
-    firstName: DataTypes.VARCHAR,
-    lastname: DataTypes.VARCHAR,
-    email: DataTypes.VARCHAR,
-    hashedPassword: DataTypes.VARCHAR
-  }, {});
-  User.associate = function(models) {
+  const User = sequelize.define(
+    "User",
+    {
+      username: {
+        unique: true,
+        allowNull: false,
+        type: DataTypes.VARCHAR(25),
+      },
+      firstName: {
+        allowNull: false,
+        type: DataTypes.VARCHAR(20),
+      },
+      lastname: {
+        allowNull: false,
+        type: DataTypes.VARCHAR(20),
+      },
+      email: {
+        unique: true,
+        allowNull: false,
+        type: DataTypes.VARCHAR,
+      },
+      hashedPassword: {
+        allowNull: false,
+        type: DataTypes.VARCHAR,
+      },
+    },
+    {}
+  );
+  User.associate = function (models) {
     // associations can be defined here
   };
   return User;
