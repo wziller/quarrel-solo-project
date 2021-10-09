@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     "Question",
     {
       question_name: {
-        type: DataTypes.VARCHAR(100),
+        type: DataTypes.STRING(100),
       },
       user1_id: {
         type: DataTypes.INTEGER,
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         references: { model: "Users" },
       },
       question: {
-        type: DataTypes.VARCHAR(150),
+        type: DataTypes.STRING(150),
       },
       user1_response: {
         type: DataTypes.TEXT,
@@ -46,6 +46,8 @@ module.exports = (sequelize, DataTypes) => {
     Question.belongsTo(models.User, { foreignKey: "user1_id" });
     Question.belongsTo(models.User, { foreignKey: "user2_id" });
     Question.belongsTo(models.Category, { foreignKey: "category_id" });
+    Question.hasMany(models.Comment, { foreignKey: "question_id" });
+    Question.hasMany(models.Vote, { foreignKey: "question_id" });
   };
   return Question;
 };

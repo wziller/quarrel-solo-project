@@ -6,24 +6,24 @@ module.exports = (sequelize, DataTypes) => {
       username: {
         unique: true,
         allowNull: false,
-        type: DataTypes.VARCHAR(25),
+        type: DataTypes.STRING(25),
       },
       firstName: {
         allowNull: false,
-        type: DataTypes.VARCHAR(20),
+        type: DataTypes.STRING(20),
       },
       lastname: {
         allowNull: false,
-        type: DataTypes.VARCHAR(20),
+        type: DataTypes.STRING(20),
       },
       email: {
         unique: true,
         allowNull: false,
-        type: DataTypes.VARCHAR,
+        type: DataTypes.STRING,
       },
       hashedPassword: {
         allowNull: false,
-        type: DataTypes.VARCHAR,
+        type: DataTypes.STRING,
       },
     },
     {}

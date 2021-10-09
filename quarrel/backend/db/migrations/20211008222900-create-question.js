@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       question_name: {
-        type: Sequelize.VARCHAR(100)
+        type: Sequelize.STRING(100)
       },
       user1_id: {
         type: Sequelize.INTEGER,
@@ -20,7 +20,7 @@ module.exports = {
         references: { model: "Users" },
       },
       question: {
-        type: Sequelize.VARCHAR(150)
+        type: Sequelize.STRING(150)
       },
       user1_response: {
         type: Sequelize.TEXT

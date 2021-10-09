@@ -11,24 +11,24 @@ module.exports = {
       username: {
         unique:true,
         allowNull: false,
-        type: Sequelize.VARCHAR(25)
+        type: Sequelize.STRING(25)
       },
       firstName: {
         allowNull: false,
-        type: Sequelize.VARCHAR(20)
+        type: Sequelize.STRING(20)
       },
       lastname: {
         allowNull: false,
-        type: Sequelize.VARCHAR(20)
+        type: Sequelize.STRING(20)
       },
       email: {
         unique:true,
         allowNull: false,
-        type: Sequelize.VARCHAR
+        type: Sequelize.STRING
       },
       hashedPassword: {
         allowNull: false,
-        type: Sequelize.VARCHAR
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
