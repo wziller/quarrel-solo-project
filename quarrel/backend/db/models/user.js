@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.STRING(20),
       },
-      lastname: {
+      lastName: {
         allowNull: false,
         type: DataTypes.STRING(20),
       },
@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   User.associate = function (models) {
-    // associations can be defined here
+    User.hasMany(models.Vote, { foreignKey: "user_id" });
   };
   return User;
 };
