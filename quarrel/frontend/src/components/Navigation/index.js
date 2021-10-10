@@ -27,7 +27,6 @@ function Navigation({ isLoaded }){
   return (
     <ul>
       <li>
-        <CreateQuestionFormModal />
         <NavLink exact to="/">Home</NavLink>
         {isLoaded && sessionLinks}
       </li>

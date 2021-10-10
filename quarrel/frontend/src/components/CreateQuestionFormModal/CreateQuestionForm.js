@@ -5,11 +5,7 @@ import { getCategories } from '../../store/questions';
 import { useHistory } from 'react-router-dom';
 
 const CreateQuestionForm = ({ hideForm }) => {
-
-
-
   const questionCategories = useSelector(state => state.questions.categories);
-  console.log(questionCategories)
   const dispatch = useDispatch();
   const history = useHistory();
   const [questionName, setQuestionName] = useState('');
@@ -100,7 +96,6 @@ const CreateQuestionForm = ({ hideForm }) => {
           placeholder="Deadline"
           value={deadline}
           onChange={updateDeadline} />
-
         <button type="submit">Create New Question</button>
         <button type="button" onClick={handleCancelClick}>Cancel</button>
       </form>

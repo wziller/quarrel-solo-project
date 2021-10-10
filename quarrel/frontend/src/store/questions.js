@@ -1,3 +1,5 @@
+import { bindActionCreators } from "redux";
+
 const LOAD = "questions/LOAD";
 const ADD_ONE = "questions/ADD_ONE";
 const LOAD_CATEGORIES = "questions/LOAD_CATEGORIES"
@@ -18,10 +20,12 @@ export const createQuestion = (question) => ({
 });
 
 export const getQuestions = () => async (dispatch) => {
-  const response = await fetch(`/api/questions`);
 
+  const response = await fetch(`/api/questions`);
+  console.log("hit_+_+_+_++_+_+", response)
   if (response.ok) {
     const allQuestionsList = await response.json();
+
     dispatch(load(allQuestionsList));
   }
 };
@@ -36,12 +40,10 @@ export const getOneQuestion = (id) => async (dispatch) => {
 };
 
 export const getCategories = () => async (dispatch) => {
-  // console.log(await fetch(`/api/questions/categories`))
   const response = await fetch(`/api/questions/categories`);
-
   if (response.ok) {
-    console.log(response)
-    dispatch(loadCategories(response));
+  const data = await response.json()
+  dispatch(loadCategories(data));
   }
 };
 
@@ -61,14 +63,9 @@ const sortList = (list) => {
 const questionReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD: {
-      const allQuestions = {};
-      action.list.forEach((question) => {
-        allQuestions[question.id] = question;
-      });
       return {
-        ...allQuestions,
         ...state,
-        list: sortList(action.list),
+        list:action.list,
       };
     }
     case LOAD_CATEGORIES: {
