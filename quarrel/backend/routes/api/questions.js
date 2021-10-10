@@ -9,18 +9,19 @@ const questionValidations = require("../../validations/questions");
 
 const router = express.Router();
 
-// router.get(
-//   "/",
-//   asyncHandler(async function (_req, res) {
-//     const questions = await QuestionRepository.list();
-//     return res.json(questions);
-//   })
-// );
+router.get(
+  "/",
+  asyncHandler(async function (_req, res) {
+    const questions = await QuestionRepository.list();
+    return res.json(questions);
+  })
+);
 
 router.get(
   "/categories",
   asyncHandler(async function (_req, res) {
-    return res.json(categories());
+      console.log("hit======>")
+    return await res.json({categories});
   })
 );
 
