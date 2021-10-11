@@ -1,6 +1,6 @@
 const {Category} = require("./models");
 const {Question} = require("./models");
-const {Vote} = require("./models");
+
 
 async function list() {
     return await Question.findAll();
@@ -18,17 +18,10 @@ async function list() {
     });
   }
 
-  async function getVotes(id) {
-    return await Vote.findAll({
-      where:{
-        question_id:id,
-      }
-    });
-  }
+
 
   module.exports = {
     list,
     categories,
     category,
-    getVotes
   };

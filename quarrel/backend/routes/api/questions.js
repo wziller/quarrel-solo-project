@@ -34,15 +34,7 @@ router.get(
   })
 );
 
-router.get(
-  "/votes/:id",
-  asyncHandler(async function (_req, res) {
-    let {id} = _req.params
-    console.log(id)
-    const category = await QuestionRepository.getVotes(id);
-    return await res.json(category);
-  })
-);
+
 
 
 module.exports = router
