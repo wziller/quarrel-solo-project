@@ -1,17 +1,34 @@
-const { Question } = require("./models");
-const { Category } = require("./models");
+const {Category} = require("./models");
+const {Question} = require("./models");
+const {Vote} = require("./models");
 
 async function list() {
     return await Question.findAll();
   }
 
   async function categories() {
-    let res = await Category.findAll();
-    return res
+    return await Category.findAll();
   }
 
+  async function category(id) {
+    return await Question.findAll({
+      where:{
+        category_id:id
+      }
+    });
+  }
+
+  async function getVotes(id) {
+    return await Vote.findAll({
+      where:{
+        question_id:id,
+      }
+    });
+  }
 
   module.exports = {
     list,
-    categories
+    categories,
+    category,
+    getVotes
   };
