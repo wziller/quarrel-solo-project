@@ -4,8 +4,9 @@ import { Route, Switch } from "react-router-dom";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
-import MainQuestionsBox from "./components/MainQuestionBox/index";
-
+import MainQuestionsBox from "./components/MainQuestionBox";
+import CategoriesList from "./components/CategoriesList";
+import TopQuestions from "./components/TopQuestions";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -17,14 +18,22 @@ function App() {
     <>
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
-        <Switch>
-          <Route exact path="/">
-            <MainQuestionsBox />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-        </Switch>
+          <Switch>
+            <Route exact path="/">
+              <div id="MainPageContent">
+                <div id="LeftMainDiv">
+                  <CategoriesList />
+                </div>
+                <div id="RightMainDiv">
+                  <MainQuestionsBox />
+                  <TopQuestions />
+                </div>
+              </div>
+            </Route>
+            <Route path="/signup">
+              <SignupFormPage />
+            </Route>
+          </Switch>
       )}
     </>
   );

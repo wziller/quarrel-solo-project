@@ -1,12 +1,18 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-
+import usersReducer from './users';
 import sessionReducer from './session';
 import questionReducer from './questions';
+import commentsReducer from './comments';
+import votesReducer from './votes'
+import { createPortal } from 'react-dom';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
-    questions: questionReducer
+    questions: questionReducer,
+    comments:commentsReducer,
+    users:usersReducer,
+    votes:votesReducer
   });
 
 let enhancer;

@@ -22,7 +22,6 @@ export const createQuestion = (question) => ({
 export const getQuestions = () => async (dispatch) => {
 
   const response = await fetch(`/api/questions`);
-  console.log("hit_+_+_+_++_+_+", response)
   if (response.ok) {
     const allQuestionsList = await response.json();
 

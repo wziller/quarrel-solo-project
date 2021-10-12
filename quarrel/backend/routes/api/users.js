@@ -5,6 +5,8 @@ const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 
+const UsersRepository =  require('../../db/Users-Repository');
+
 const router = express.Router();
 
 const validateSignup = [
@@ -41,6 +43,14 @@ router.post(
         user,
       });
     }),
+  );
+
+  router.get(
+    "/all",
+    asyncHandler(async function (_req, res) {
+      const users = await UsersRepository.getUsers();
+      return await res.json(users);
+    })
   );
 
 

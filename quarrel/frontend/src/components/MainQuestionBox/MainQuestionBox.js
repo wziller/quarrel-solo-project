@@ -16,7 +16,7 @@ function MainQuestionsBox() {
   return (
     <div id="mainQuestionsContainer">
       {questions.map((question) => {
-        <p>{question.question_name}</p>;
+        <p key={question.id}>{question.question_name}</p>;
       })}
     </div>
   );
