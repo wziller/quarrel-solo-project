@@ -1,4 +1,5 @@
 import { bindActionCreators } from "redux";
+import { csrfFetch } from './csrf';
 
 const LOAD = "questions/LOAD";
 const ADD_ONE = "questions/ADD_ONE";
@@ -14,13 +15,29 @@ const loadCategories = categories => ({
   categories:categories,
 });
 
-export const createQuestion = (question) => ({
+const addOneQuestion = question => ({
   type: ADD_ONE,
   question,
 });
 
-export const getQuestions = () => async (dispatch) => {
+export const createQuestion = (newQuestion) => async dispatch => {
+  const response = await csrfFetch(`/api/questions/`,{
+    method:'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body:JSON.stringify(newQuestion)
+  });
 
+  if (response.ok) {
+    const newQuestion = await response.json();
+    dispatch(addOneQuestion(newQuestion));
+    return newQuestion
+  }
+}
+
+
+export const getQuestions = () => async (dispatch) => {
   const response = await fetch(`/api/questions`);
   if (response.ok) {
     const allQuestionsList = await response.json();
@@ -30,17 +47,17 @@ export const getQuestions = () => async (dispatch) => {
 };
 
 export const getOneQuestion = (id) => async (dispatch) => {
-  const response = await fetch(`/api/question/${id}`);
-
+  const response = await fetch(`/api/questions/${id}`);
   if (response.ok) {
     const question = await response.json();
-    dispatch(createQuestion(question));
+    dispatch(load(question));
   }
 };
 
 export const getCategories = () => async (dispatch) => {
-  const response = await fetch(`/api/questions/categories`);
+  const response = await fetch(`/api/categories`);
   if (response.ok) {
+    console.log("categories thunk")
   const data = await response.json()
   dispatch(loadCategories(data));
   }

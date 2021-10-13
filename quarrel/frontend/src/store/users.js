@@ -12,7 +12,6 @@ const load = (list) => ({
   export const getUsers = () => async (dispatch) => {
 
     const response = await fetch(`/api/users/all`);
-    console.log("hit=======>");
     if (response.ok) {
       const allUsersList = await response.json();
 

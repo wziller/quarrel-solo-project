@@ -12,7 +12,6 @@ const router = express.Router();
 router.get(
   "/:id",
   asyncHandler(async function (_req, res) {
-      console.log("hit+_+_++_000000")
     const { id } = _req.params;
     const comments = await CommentRepository.list(id);
     return res.json(comments);

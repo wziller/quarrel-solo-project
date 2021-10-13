@@ -6,6 +6,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import MainQuestionsBox from "./components/MainQuestionBox";
 import CategoriesList from "./components/CategoriesList";
+import IndividualQuestionBox from "./components/IndividualQuestionBox/index";
 import TopQuestions from "./components/TopQuestions";
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +33,9 @@ function App() {
             </Route>
             <Route path="/signup">
               <SignupFormPage />
+            </Route>
+            <Route path="/questions/:id">
+              <IndividualQuestionBox />
             </Route>
           </Switch>
       )}

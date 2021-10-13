@@ -16,11 +16,10 @@ const load = (list) => ({
     const response = await fetch(`/api/votes`);
     if (response.ok) {
       const allVotesList = await response.json();
-
       dispatch(load(allVotesList));
     }
   };
-  
+
   const votesReducer = (state = initialState, action) => {
     switch (action.type) {
       case LOAD: {

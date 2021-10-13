@@ -6,23 +6,25 @@ import { createQuestion } from "../../store/questions";
 import { getCategories } from "../../store/questions";
 import { getUsers } from "../../store/users";
 import { useHistory } from "react-router-dom";
+import { set } from "js-cookie";
 
-const CreateQuestionForm = ({ hideForm }) => {
+const CreateQuestionForm = ({showModal}) => {
   const users = useSelector((state) => state.users.list);
   const questionCategories = useSelector((state) => state.questions.categories);
   const dispatch = useDispatch();
   const history = useHistory();
-  const { userId } = useSelector((state) => state.session);
-  const [questionName, setQuestionName] = useState("");
+  const userId  = useSelector((state) => state.session.user.id);
+
+  const [question_name, setQuestionName] = useState("");
   const [user1_id, setUser1_id] = useState(userId);
-  const [user2_id, setUser2_id] = useState(0);
+  const [user2_id, setUser2_id] = useState(1);
   const [question, setQuestion] = useState("");
   const [user1_response, setUser1_response] = useState("");
-  const [user2_response, setUser2_response] = useState(null);
+  const [user2_response, setUser2_response] = useState("");
   const [user2_username, setUser2_username] = useState("");
   const [user1_upvotes, setUser1_upvotes] = useState(0);
   const [user2_upvotes, setUser2_upvotes] = useState(0);
-  const [category_id, setCategory_id] = useState(0);
+  const [category_id, setCategory_id] = useState(1);
   const [deadline, setDeadline] = useState(new Date());
   const [complete, setComplete] = useState(false);
   const usernames = [];
@@ -31,6 +33,9 @@ const CreateQuestionForm = ({ hideForm }) => {
   });
   const updateQuestionName = (e) => setQuestionName(e.target.value);
   // const updateUser1_id = (e) => setUser1_id(e.target.value);
+  const updateUser2_username =(acInput) =>{
+    setUser2_username(acInput)
+  }
   const updateUser2_id = (e) => setUser2_id(e.target.value);
   const updateQuestion = (e) => setQuestion(e.target.value);
   const updateUser1_response = (e) => setUser1_response(e.target.value);
@@ -49,11 +54,16 @@ const CreateQuestionForm = ({ hideForm }) => {
     dispatch(getUsers());
   }, [dispatch]);
 
+  useEffect(async()=>{
+    const opponent = await users.find(user=>user.username === user2_username)
+    setUser2_id(opponent?.id)
+  },[user2_username]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setUser1_id(userId)
     const newQuestion = {
-      questionName,
+      question_name,
       user1_id,
       user2_id,
       question,
@@ -66,17 +76,17 @@ const CreateQuestionForm = ({ hideForm }) => {
       complete,
     };
 
-    let createdQuestion;
-    createdQuestion = await dispatch(createQuestion(newQuestion));
+
+    const createdQuestion = dispatch(createQuestion(newQuestion));
     if (createdQuestion) {
-      history.push(`/questions/${createdQuestion.id}`);
-      hideForm();
+      history.push(`/`);
+      showModal(false);
     }
   };
 
   const handleCancelClick = (e) => {
     e.preventDefault();
-    hideForm();
+    showModal(false);
   };
 
   return (
@@ -86,7 +96,7 @@ const CreateQuestionForm = ({ hideForm }) => {
           type="text"
           placeholder="Question"
           required
-          value={questionName}
+          value={question_name}
           onChange={updateQuestionName}
         />
         <input
@@ -96,7 +106,7 @@ const CreateQuestionForm = ({ hideForm }) => {
           value={question}
           onChange={updateQuestion}
         />
-        <Autocomplete suggestions={usernames} placeholder= "test"/>
+        <Autocomplete suggestions={usernames} placeholder= "Enter your opponents username" changeStateFunc={updateUser2_username}/>
         <input
           type="text"
           placeholder="Your Argument Here"
@@ -106,7 +116,7 @@ const CreateQuestionForm = ({ hideForm }) => {
         />
         <select onChange={updateCategory_id}>
           {questionCategories.map((category) => (
-            <option key={category.id}>{category.name}</option>
+            <option key={category.id} value={category.id}>{category.name}</option>
           ))}
         </select>
         <input

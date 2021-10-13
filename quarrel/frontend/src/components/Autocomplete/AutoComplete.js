@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./Autocomplete.css";
-const AutoComplete = ({ suggestions }, {placeholder} ) => {
+const AutoComplete = ({ suggestions , placeholder, changeStateFunc} ) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(0);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -17,6 +17,7 @@ const AutoComplete = ({ suggestions }, {placeholder} ) => {
     setFilteredSuggestions(unLinked);
     setActiveSuggestionIndex(0);
     setShowSuggestions(true);
+
   };
 
   const onClick = (e) => {
@@ -24,11 +25,12 @@ const AutoComplete = ({ suggestions }, {placeholder} ) => {
     setInput(e.target.innerText);
     setActiveSuggestionIndex(0);
     setShowSuggestions(false);
+    changeStateFunc(e.target.innerText)
   };
 
   const SuggestionsListComponent = () => {
     return filteredSuggestions.length ? (
-      <ul class="suggestions">
+      <ul className="suggestions" >
         {filteredSuggestions.map((suggestion, index) => {
           let className;
           // Flag the active suggestion with a class
@@ -43,7 +45,7 @@ const AutoComplete = ({ suggestions }, {placeholder} ) => {
         })}
       </ul>
     ) : (
-      <div class="no-suggestions">
+      <div className="no-suggestions">
         <em>No users found</em>
       </div>
     );
@@ -51,7 +53,7 @@ const AutoComplete = ({ suggestions }, {placeholder} ) => {
 
   return (
     <>
-      <input type="text" onChange={onChange} value={input} />
+      <input type="text" onChange={onChange} value={input} placeholder={placeholder} />
       {showSuggestions && input && <SuggestionsListComponent />}
     </>
   );

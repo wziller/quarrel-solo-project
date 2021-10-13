@@ -8,21 +8,13 @@ const questionValidations = require("../../validations/questions");
 
 const router = express.Router();
 
+
 router.get(
   "/",
   asyncHandler(async function (_req, res) {
-    const questions = await QuestionRepository.list();
-    return res.json(questions);
-  })
-);
-
-router.post(
-  '/',
-  // questionValidations.validateQuestion,
-  asyncHandler(async function (req, res) {
-
-    const newQuestion = await QuestionRepository.create(req.body);
-    return newQuestion;
+    console.log(":api categories")
+    const categories = await QuestionRepository.categories();
+    return await res.json(categories);
   })
 );
 
@@ -30,12 +22,9 @@ router.get(
   "/:id",
   asyncHandler(async function (_req, res) {
     let {id} = _req.params
-    const question = await QuestionRepository.getQuestion(id);
-    return await res.json(question);
+    const category = await QuestionRepository.category(id);
+    return await res.json(category);
   })
 );
-
-
-
 
 module.exports = router

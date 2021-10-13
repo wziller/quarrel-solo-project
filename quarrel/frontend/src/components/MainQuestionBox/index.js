@@ -5,6 +5,7 @@ import * as sessionActions from "../../store/session";
 import { getQuestions } from "../../store/questions";
 import { getUsers } from '../../store/users';
 import { getComments } from "../../store/comments";
+import { NavLink } from "react-router-dom";
 import { getVotes } from "../../store/votes";
 import "./MainQuestionsBox.css";
 
@@ -29,30 +30,37 @@ function MainQuestionsBox() {
   useEffect(() => {
     dispatch(getVotes());
   }, [dispatch]);
+
   useEffect(()=> {
     dispatch(getUsers())
+  },[dispatch])
+
+  useEffect(()=> {
+    dispatch(getComments())
   },[dispatch])
 
   return (
     <div id="mainQuestionsContainer">
         <h2>Questions</h2>
         <div>
-        {questions.map((question) => question.user1_response && (
-        <div key={question.id} className="questionCard">
-            <h3>{question.question_name}</h3>
-            <h4 id="descriptiontitle">Question Description</h4>
-            <p>{question.question}</p>
-            <div className="responses">
-                <div className="user_1Response">
-                    {question.user1_response}
-                    <p>{`Up Votes: ${question.user1_upvotes}`}</p>
-                </div>
-                <div className="user_2Response">
-                    {question.user2_response}
-                    <p>{`Up Votes: ${question.user2_upvotes}`}</p>
-                </div>
-            </div>
-        </div>
+        {questions.map((question) => question.user2_response && (
+        <NavLink to={`/questions/${question.id}`}>
+          <div key={question.id} className="questionCard">
+              <h3>{question.question_name}</h3>
+              <h4 id="descriptiontitle">Question Description</h4>
+              <p>{question.question}</p>
+              <div className="responses">
+                  <div className="user_1Response">
+                      {question.user1_response}
+                      <p>{`Up Votes: ${question.user1_upvotes}`}</p>
+                  </div>
+                  <div className="user_2Response">
+                      {question.user2_response}
+                      <p>{`Up Votes: ${question.user2_upvotes}`}</p>
+                  </div>
+              </div>
+          </div>
+        </NavLink>
         ))}
         </div>
     </div>
