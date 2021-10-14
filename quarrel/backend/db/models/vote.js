@@ -3,11 +3,8 @@ module.exports = (sequelize, DataTypes) => {
   const Vote = sequelize.define(
     "Vote",
     {
-      user1_vote: {
-        type: DataTypes.BOOLEAN,
-      },
-      user2_vote: {
-        type: DataTypes.BOOLEAN,
+      vote: {
+        type: DataTypes.STRING,
       },
       user_id: {
         type: DataTypes.INTEGER,

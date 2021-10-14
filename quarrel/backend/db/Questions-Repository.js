@@ -27,30 +27,51 @@ async function list() {
   }
 
   async function updateUser2Response(id, update) {
-    const question =  await Question.findAll({
-      where:{
-        id:id
-      }
-    });
-    question.user_response = update;
+    const {arg} = update;
+    const question =  await Question.update({user2_response:arg},
+        {
+          where: {id},
+          returning:true,
+          plain: true
+        }
+      )
+    return question;
   }
 
   async function getOneUserCompletedQuestions(id) {
-    return await Question.findAll({
+
+    const U1Questions = await Question.findAll({
       where:{
         user1_id:id,
         complete:true
       }
     });
+    const U2Questions = await Question.findAll({
+      where:{
+        user2_id:id,
+        complete:true
+      }
+    });
+
+    const Questions = [...U1Questions,...U2Questions]
+    return Questions
   }
 
   async function getOneUserActiveQuestions(id) {
-      return await Question.findAll({
+      const U1Questions =  await Question.findAll({
         where:{
           user1_id:id,
           complete:false
         }
       });
+      const U2Questions = await Question.findAll({
+        where:{
+          user2_id:id,
+          complete:false
+        }
+      });
+      const Questions = [...U1Questions, ...U2Questions]
+      return Questions
   }
 
   async function getOneUserPendingQuestions(id) {

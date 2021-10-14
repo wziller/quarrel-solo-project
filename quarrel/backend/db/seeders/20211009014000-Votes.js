@@ -2,8 +2,7 @@
 const fakeUsers = require("./20211009011000-Users");
 const fakeQuestions = require("./20211009013000-Questions");
 const fakeVotes = [{
-  user1_vote: true,
-  user2_vote: false,
+  vote: "user1",
   user_id: 1,
   question_id: 2,
   createdAt: new Date(),
@@ -14,10 +13,9 @@ fakeUsers.fakeUsers.forEach((user, idx) => {
   let userId = idx + 1;
   fakeQuestions.fakeQuestions.forEach((question, idx) => {
    let questionId = idx + 1
-   const vote1 = Math.random() > 0.5 ? true : false;
+   const vote = Math.random() > 0.5 ? "user1" : "user2";
     let newvote = {
-      user1_vote: vote1,
-      user2_vote: vote1 === true ? false : true,
+      vote: vote,
       user_id: userId,
       question_id: questionId,
       createdAt: new Date(),

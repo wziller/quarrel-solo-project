@@ -8,11 +8,8 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user1_vote: {
-        type: Sequelize.BOOLEAN
-      },
-      user2_vote: {
-        type: Sequelize.BOOLEAN
+      vote: {
+        type: Sequelize.STRING
       },
       user_id: {
         type: Sequelize.INTEGER,
