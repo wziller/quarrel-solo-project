@@ -35,6 +35,24 @@ router.get(
   })
 );
 
+router.delete(
+  "/:id",
+  asyncHandler(async function (req, res) {
+    console.log("delete route hit")
+    let {id} = req.params
+    const question = await QuestionRepository.deleteQuestion(id);
+    return await res.json(question);
+  })
+);
+router.put(
+  "/:id",
+  asyncHandler(async function (req, res) {
+    let {id} = req.params
+    let update = req.body
+    const question = await QuestionRepository.updateUser2Response(id, update);
+    return await res.json(question);
+  })
+);
 
 
 

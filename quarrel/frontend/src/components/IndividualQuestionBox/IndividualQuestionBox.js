@@ -28,7 +28,6 @@ function IndividualQuestionBox() {
   });
 
   useEffect(() => {
-    console.log("right here")
     dispatch(getOneQuestion(questionId));
   }, [dispatch]);
 

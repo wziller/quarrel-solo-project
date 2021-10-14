@@ -38,7 +38,7 @@ const AutoComplete = ({ suggestions , placeholder, changeStateFunc} ) => {
             className = "suggestion-active";
           }
           return (
-            <li className={className} key={suggestion} onClick={onClick}>
+            <li className={className} key={suggestion} onClick={onClick} >
               {suggestion}
             </li>
           );

@@ -5,9 +5,11 @@ import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import MainQuestionsBox from "./components/MainQuestionBox";
+import MyQuestionsPage from "./components/MyQuestionsPage";
 import CategoriesList from "./components/CategoriesList";
 import IndividualQuestionBox from "./components/IndividualQuestionBox/index";
 import TopQuestions from "./components/TopQuestions";
+import MyQuestionsModal from "./components/MyQuestionsPage";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -36,6 +38,9 @@ function App() {
             </Route>
             <Route path="/questions/:id">
               <IndividualQuestionBox />
+            </Route>
+            <Route path="/myquestions/:id">
+              <MyQuestionsPage />
             </Route>
           </Switch>
       )}

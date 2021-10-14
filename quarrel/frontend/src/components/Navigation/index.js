@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import MyQuestionsButton from './MyQuestionsButton'
 import LoginFormModal from '../LoginFormModal';
 import CreateQuestionFormModal from '../CreateQuestionFormModal/index';
 import './Navigation.css';
@@ -15,7 +16,9 @@ function Navigation({ isLoaded }){
       <div>
         <ProfileButton user={sessionUser} />
         <CreateQuestionFormModal user={sessionUser} />
+        <MyQuestionsButton user={sessionUser} />
       </div>
+
     );
   } else {
     sessionLinks = (

@@ -5,7 +5,6 @@ import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 import { getQuestions } from "../../store/questions";
 import { getUsers } from '../../store/users';
-import { getComments } from "../../store/comments";
 import { getVotes } from "../../store/votes";
 import "./MainQuestionsBox.css";
 
@@ -39,8 +38,7 @@ function MainQuestionsBox() {
         <h2>Questions</h2>
         <div>
         {questions.map((question) => question.user1_response && (
-        <NavLink to={`/questions/${question.id}`}>
-          <>
+        <NavLink key={question.id} to={`/questions/${question.id}`}>
           <div key={question.id} className="questionCard">
               <h3>{question.question_name}</h3>
               <h4 id="descriptiontitle">Question Description</h4>
@@ -56,7 +54,6 @@ function MainQuestionsBox() {
                   </div>
               </div>
           </div>
-          </>
         </NavLink>
         ))}
         </div>

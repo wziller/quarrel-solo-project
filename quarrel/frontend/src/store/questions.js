@@ -1,41 +1,81 @@
 import { bindActionCreators } from "redux";
-import { csrfFetch } from './csrf';
+import { csrfFetch } from "./csrf";
 
 const LOAD = "questions/LOAD";
+const LOAD_COMPLETED = "questions/LOAD_COMPLETED";
+const LOAD_ACTIVE = "questions/LOAD_ACTIVE";
+const LOAD_PENDING = "questions/LOAD_PENDING";
 const ADD_ONE = "questions/ADD_ONE";
-const LOAD_CATEGORIES = "questions/LOAD_CATEGORIES"
+const LOAD_CATEGORIES = "questions/LOAD_CATEGORIES";
 
 const load = (list) => ({
   type: LOAD,
   list,
 });
 
-const loadCategories = categories => ({
-  type: LOAD_CATEGORIES,
-  categories:categories,
+const loadCompleted = (list) => ({
+  type: LOAD_COMPLETED,
+  list,
 });
 
-const addOneQuestion = question => ({
+const loadActive = (list) => ({
+  type: LOAD_ACTIVE,
+  list,
+});
+
+const loadPending = (list) => ({
+  type: LOAD_PENDING,
+  list,
+});
+
+const loadCategories = (categories) => ({
+  type: LOAD_CATEGORIES,
+  categories: categories,
+});
+
+const addOneQuestion = (question) => ({
   type: ADD_ONE,
   question,
 });
 
-export const createQuestion = (newQuestion) => async dispatch => {
-  const response = await csrfFetch(`/api/questions/`,{
-    method:'POST',
+export const createQuestion = (newQuestion) => async (dispatch) => {
+  const response = await csrfFetch(`/api/questions/`, {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
-    body:JSON.stringify(newQuestion)
+    body: JSON.stringify(newQuestion),
   });
 
   if (response.ok) {
     const newQuestion = await response.json();
     dispatch(addOneQuestion(newQuestion));
-    return newQuestion
+    return newQuestion;
   }
-}
+};
 
+export const deleteQuestion = (id) => async (dispatch) => {
+  console.log("delete hit", id.questionId);
+  let deleteId = id.questionId;
+  const response = await csrfFetch(`/api/questions/${deleteId}`, {
+    method: "DELETE",
+  });
+
+  if (response.ok) {
+    const deletedQuestion = await response.json();
+    return deletedQuestion;
+  }
+};
+
+export const updateUser2Response = (questionId, update) => async (dispatch) => {
+  await csrfFetch(`/api/questions/${questionId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(update),
+  });
+};
 
 export const getQuestions = () => async (dispatch) => {
   const response = await fetch(`/api/questions`);
@@ -43,6 +83,33 @@ export const getQuestions = () => async (dispatch) => {
     const allQuestionsList = await response.json();
 
     dispatch(load(allQuestionsList));
+  }
+};
+
+export const getOneUserCompletedQuestions = (id) => async (dispatch) => {
+  const response = await fetch(`/api/myquestions/user/${id}/completed`);
+  if (response.ok) {
+    const userQuestionsList = await response.json();
+
+    dispatch(loadCompleted(userQuestionsList));
+  }
+};
+
+export const getOneUserActiveQuestions = (id) => async (dispatch) => {
+  const response = await fetch(`/api/myquestions/user/${id}/active`);
+  if (response.ok) {
+    const userQuestionsList = await response.json();
+
+    dispatch(loadActive(userQuestionsList));
+  }
+};
+
+export const getOneUserPendingQuestions = (id) => async (dispatch) => {
+  const response = await fetch(`/api/myquestions/user/${id}/pending`);
+  if (response.ok) {
+    const userQuestionsList = await response.json();
+
+    dispatch(loadPending(userQuestionsList));
   }
 };
 
@@ -57,9 +124,8 @@ export const getOneQuestion = (id) => async (dispatch) => {
 export const getCategories = () => async (dispatch) => {
   const response = await fetch(`/api/categories`);
   if (response.ok) {
-    console.log("categories thunk")
-  const data = await response.json()
-  dispatch(loadCategories(data));
+    const data = await response.json();
+    dispatch(loadCategories(data));
   }
 };
 
@@ -81,7 +147,25 @@ const questionReducer = (state = initialState, action) => {
     case LOAD: {
       return {
         ...state,
-        list:action.list,
+        list: action.list,
+      };
+    }
+    case LOAD_COMPLETED: {
+      return {
+        ...state,
+        completed: action.list,
+      };
+    }
+    case LOAD_ACTIVE: {
+      return {
+        ...state,
+        active: action.list,
+      };
+    }
+    case LOAD_PENDING: {
+      return {
+        ...state,
+        pending: action.list,
       };
     }
     case LOAD_CATEGORIES: {

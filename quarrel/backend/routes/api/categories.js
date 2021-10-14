@@ -12,7 +12,6 @@ const router = express.Router();
 router.get(
   "/",
   asyncHandler(async function (_req, res) {
-    console.log(":api categories")
     const categories = await QuestionRepository.categories();
     return await res.json(categories);
   })

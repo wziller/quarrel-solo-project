@@ -35,16 +35,12 @@ function MainQuestionsBox() {
     dispatch(getUsers())
   },[dispatch])
 
-  useEffect(()=> {
-    dispatch(getComments())
-  },[dispatch])
-
   return (
     <div id="mainQuestionsContainer">
         <h2>Questions</h2>
         <div>
         {questions.map((question) => question.user2_response && (
-        <NavLink to={`/questions/${question.id}`}>
+        <NavLink key={question.id} to={`/questions/${question.id}`}>
           <div key={question.id} className="questionCard">
               <h3>{question.question_name}</h3>
               <h4 id="descriptiontitle">Question Description</h4>
