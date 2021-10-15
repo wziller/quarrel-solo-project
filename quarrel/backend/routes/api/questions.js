@@ -27,6 +27,16 @@ router.post(
 );
 
 router.get(
+  "/category/:id",
+  asyncHandler(async function (_req, res) {
+    let {id} = _req.params
+    console.log(id)
+    const questions = await QuestionRepository.getQuestionByCategory(id);
+    return await res.json(questions);
+  })
+);
+
+router.get(
   "/:id",
   asyncHandler(async function (_req, res) {
     let {id} = _req.params
@@ -50,10 +60,11 @@ router.put(
     let {id} = req.params
     let update = req.body
     const question = await QuestionRepository.updateUser2Response(id, update);
-    console.log("theQUestion++++++++++++++++++>", question);
     return await res.json(question);
   })
 );
+
+
 
 
 

@@ -17,6 +17,15 @@ async function list() {
       }
     });
   }
+
+  async function getQuestionByCategory(id) {
+    return await Question.findAll({
+      where:{
+        category_id:id
+      }
+    });
+  }
+
   async function deleteQuestion(id) {
     const question =  await Question.findAll({
       where:{
@@ -108,5 +117,6 @@ async function list() {
     getOneUserActiveQuestions,
     getOneUserPendingQuestions,
     deleteQuestion,
-    updateUser2Response
+    updateUser2Response,
+    getQuestionByCategory
   };
