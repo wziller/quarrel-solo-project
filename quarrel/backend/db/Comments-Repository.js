@@ -13,7 +13,7 @@ async function list(id) {
     return comment.id;
   }
 
-  async function deleteQuestion(id) {
+  async function deleteComment(id) {
     const question =  await Comment.findAll({
       where:{
         id:id
@@ -22,8 +22,23 @@ async function list(id) {
     question[0].destroy()
   }
 
+  async function updateResponse(id, update) {
+    console.log(id)
+    console.log(update)
+    const {body} = update
+    const question =  await Comment.update({body},
+        {
+          where: {id},
+          returning:true,
+          plain: true
+        }
+      )
+    return question;
+  }
+
   module.exports = {
     list,
     create,
-    deleteQuestion
+    deleteComment,
+    updateResponse
   };

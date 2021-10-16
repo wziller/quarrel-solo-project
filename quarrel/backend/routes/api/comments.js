@@ -23,18 +23,27 @@ router.delete(
   asyncHandler(async function (req, res) {
 
     let {id} = req.params
-    const comment = await CommentsRepository.deleteQuestion(id);
+    const comment = await CommentsRepository.deleteComment(id);
     return await res.json(comment);
   })
 );
 
 router.post(
   '/',
-  // questionValidations.validateQuestion,
   asyncHandler(async function (req, res) {
 
     const newComment = await CommentsRepository.create(req.body);
     return newComment;
+  })
+);
+
+router.put(
+  "/:id",
+  asyncHandler(async function (req, res) {
+    let {id} = req.params
+    let update = req.body
+    const comment = await CommentsRepository.updateResponse(id, update);
+    return await res.json(comment);
   })
 );
 
