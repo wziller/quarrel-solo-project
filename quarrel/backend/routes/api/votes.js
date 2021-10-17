@@ -9,7 +9,7 @@ const questionValidations = require("../../validations/questions");
 const router = express.Router();
 router.get(
     "/",
-    asyncHandler(async function (_req, res) {
+    asyncHandler(async function (req, res) {
       const votes = await VotesRepository.getVotes();
       return await res.json(votes);
     })
@@ -25,6 +25,16 @@ router.get(
     })
   );
 
+
+  router.get(
+    "/question/:questionId/user/:userId",
+    asyncHandler(async function (req, res) {
+      const {questionId} = req.params;
+      const {userId} = req.params;
+      const vote = await VotesRepository.getUserVote(questionId, userId);
+      return await res.json(vote);
+    })
+  );
   router.put(
     "/:id",
     asyncHandler(async function (req, res) {
