@@ -23,8 +23,7 @@ async function list(id) {
   }
 
   async function updateResponse(id, update) {
-    console.log(id)
-    console.log(update)
+    
     const {body} = update
     const question =  await Comment.update({body},
         {

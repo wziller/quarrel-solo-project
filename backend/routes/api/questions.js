@@ -30,7 +30,6 @@ router.get(
   "/category/:id",
   asyncHandler(async function (_req, res) {
     let {id} = _req.params
-    console.log(id)
     const questions = await QuestionRepository.getQuestionByCategory(id);
     return await res.json(questions);
   })
