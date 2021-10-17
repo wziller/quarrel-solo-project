@@ -6,8 +6,9 @@ import * as sessionActions from "../../store/session";
 import { getOneQuestion } from "../../store/questions";
 import { getQuestions } from "../../store/questions";
 import { getUsers } from "../../store/users";
-import commentsReducer, { getComments } from "../../store/comments";
+import { getComments } from "../../store/comments";
 import { getVotes } from "../../store/votes";
+import UpvotesDisplay from "../Upvotes";
 import CommentsBox from "../CommentsSection";
 import "./IndividualQuestionBox.css";
 
@@ -21,7 +22,6 @@ function IndividualQuestionBox() {
   const question = useSelector((state) => state?.questions?.list);
   const sessionUser = useSelector((state) => state.session.user);
   const user_id = sessionUser.id;
-  console.log(question)
   useEffect(() => {
     dispatch(getOneQuestion(questionId));
   }, [dispatch]);
@@ -41,16 +41,15 @@ function IndividualQuestionBox() {
           <div className="responses">
             <div className="user_1Response">
               {question.user1_response}
-              <p>{`Up Votes: ${question?.user1_upvotes}`}</p>
             </div>
             <div className="user_2Response">
               {question.user2_response}
-              <p>{`Up Votes: ${question?.user2_upvotes}`}</p>
             </div>
           </div>
         </div>
       </div>
       <h2 id="commenttitle">Comments</h2>
+      {sessionUser ? <UpvotesDisplay questionId={question.id} userId={sessionUser.id} /> : <p>Login to see voting</p>}
       <CommentsBox userId={user_id} questionId={questionId} />
     </div>
   ) : (<div><p>Error question not found</p></div>);

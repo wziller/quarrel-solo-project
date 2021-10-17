@@ -15,10 +15,10 @@ const [count, setCount] = useState(1);
   const userVote = allVotes.find(
     (vote) => vote.user_id === userId && vote.question_id === questionId
   );
-  console.log(userVote)
+ 
 
-  useEffect(() => {
-    dispatch(getVotes());
+  useEffect(async () => {
+    dispatch(await getVotes());
   }, [dispatch, count]);
   return userVote? (
     <div className="upvotesDisplayContainer">

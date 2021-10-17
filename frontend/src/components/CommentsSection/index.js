@@ -3,7 +3,6 @@ import CommentsSection from "./CommentsSection";
 import './CommentsSection.css'
 
 const CommentsBox = ({ userId, questionId }) => {
-  console.log("commentsQid============>", questionId)
   return (
     <div id='mainCommentContainer'>
       <div id="commentInputContainer">

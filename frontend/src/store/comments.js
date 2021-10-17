@@ -53,12 +53,9 @@ const load = (comments) => ({
   };
 
   export const editComment = ({updatedComment}) => async (dispatch) => {
-    console.log("commentId==================>",updatedComment)
 
     const comment_id = updatedComment.comment_id;
     const body = updatedComment.body;
-    console.log("body============>", body)
-    console.log("Comment_id============>", comment_id)
     const response = await csrfFetch(`/api/comments/${comment_id}`, {
       method: "PUT",
       headers: {

@@ -6,6 +6,7 @@ import ProfileButton from './ProfileButton';
 import MyQuestionsButton from './MyQuestionsButton'
 import LoginFormModal from '../LoginFormModal';
 import * as sessionActions from '../../store/session';
+import { getQuestions } from '../../store/questions';
 import Logo from '../Logo'
 import CreateQuestionFormModal from '../CreateQuestionFormModal/index';
 import './Navigation.css';
@@ -22,6 +23,10 @@ function Navigation({ isLoaded }){
       return dispatch(sessionActions.login({ credential: "Demo_User", password: "password" }))
   }
 
+  const handleHomeClick = async () => {
+    await dispatch(getQuestions())
+  }
+
 
   let sessionLinks;
   if (sessionUser) {
@@ -32,7 +37,7 @@ function Navigation({ isLoaded }){
         <div className='navButtons'>
 
           <NavLink exact to="/">
-            <button className="homeButton">Home</button>
+            <button className="homeButton" onClick={handleHomeClick}>Home</button>
           </NavLink>
           <ProfileButton user={sessionUser} />
           <CreateQuestionFormModal user={sessionUser} />

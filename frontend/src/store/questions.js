@@ -134,7 +134,8 @@ export const getOneQuestion = (id) => async (dispatch) => {
   const response = await fetch(`/api/questions/${id}`);
   if (response.ok) {
     const question = await response.json();
-    dispatch(load(question));
+    const res = [question]
+    dispatch(load(res));
   }
 };
 

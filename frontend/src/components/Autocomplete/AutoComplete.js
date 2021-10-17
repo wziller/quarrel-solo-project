@@ -46,7 +46,7 @@ const AutoComplete = ({ suggestions , placeholder, changeStateFunc} ) => {
       </ul>
     ) : (
       <div className="no-suggestions">
-        <em>No users found</em>
+        <em>No results found</em>
       </div>
     );
   };

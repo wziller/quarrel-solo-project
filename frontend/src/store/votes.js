@@ -48,7 +48,7 @@ export const getVotes = () => async (dispatch) => {
           user2: 0,
         }) && (newVotesList[vote.question_id][vote.vote] = 1) : newVotesList[vote.question_id][vote.vote] += 1;
     });
-    dispatch(load(newVotesList, allVotesList));
+    await dispatch(load(newVotesList, allVotesList));
   }
 };
 

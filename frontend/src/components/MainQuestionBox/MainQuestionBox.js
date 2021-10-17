@@ -6,6 +6,7 @@ import * as sessionActions from "../../store/session";
 import { getQuestions } from "../../store/questions";
 import { getUsers } from "../../store/users";
 import { getVotes } from "../../store/votes";
+import AutoComplete from "../Autocomplete/AutoComplete";
 import "./MainQuestionsBox.css";
 
 function MainQuestionsBox() {
@@ -20,19 +21,17 @@ function MainQuestionsBox() {
     dispatch(getQuestions());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   dispatch(getVotes());
-  // }, []);
-
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
 
   return users.length > 0 ? (
+
     <div id="mainQuestionsContainer">
+      <AutoComplete suggestions={usernames} placeholder= "Serach for a question here" changeStateFunc={updateUser2_username}/>
       <h2>Questions</h2>
       <div>
-      
+
         { questions.map(
           (question) =>
             question.user1_response && (

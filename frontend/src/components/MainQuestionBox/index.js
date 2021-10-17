@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
-import { getQuestions } from "../../store/questions";
+import { getOneQuestion, getQuestions, updateUser2Response } from "../../store/questions";
 import { getUsers } from "../../store/users";
 import { getComments } from "../../store/comments";
 import { NavLink } from "react-router-dom";
 import { getVotes } from "../../store/votes";
+import AutoComplete from "../Autocomplete/AutoComplete";
 import UpvotesDisplay from "../Upvotes";
 import "./MainQuestionsBox.css";
 
@@ -16,21 +17,47 @@ function MainQuestionsBox() {
 
   const questions = useSelector((state) => state.questions.list);
   const sessionUser = useSelector((state) => state.session.user);
+  const [searchedQuestion, setSearchedQuestion] = useState("");
+  const [selectedQuestion, setSelectedquestion] = useState({});
+  const questionNames = [];
+  questions.forEach((question) => {
+    questionNames.push(question.question_name);
+  });
 
-  useEffect(() => {
-    dispatch(getUsers())
-    dispatch(getQuestions());
+  const updateSearchedQuestion =(acInput) =>{
+    setSearchedQuestion(acInput)
+  }
+console.log(searchedQuestion)
+
+
+  useEffect(()=> {
+
+  }, [searchedQuestion])
+
+  useEffect(async() => {
+    await dispatch(getUsers());
+    await dispatch(getQuestions());
   }, [dispatch]);
+
+  useEffect(async()=>{
+    const questionId = await questions?.find(question=> question.question_name === searchedQuestion)
+    questionId && dispatch(getOneQuestion(questionId.id))
+  },[searchedQuestion]);
 
   return questions ? (
     <div id="mainQuestionsContainer">
+      <AutoComplete
+        suggestions={questionNames}
+        placeholder="Search for a question here"
+        changeStateFunc={updateSearchedQuestion}
+      />
       <h2>Questions</h2>
       <div>
         {questions?.map((question) => {
           if (question.user2_response)
             return (
               <div key={question.id}>
-                <NavLink  to={`/questions/${question.id}`}>
+                <NavLink to={`/questions/${question.id}`}>
                   <div key={question.id} className="questionCard">
                     <h3>{question.question_name}</h3>
                     <h4 id="descriptiontitle">Question Description</h4>
@@ -53,7 +80,14 @@ function MainQuestionsBox() {
                     </div>
                   </div>
                 </NavLink>
-                {sessionUser ? <UpvotesDisplay questionId={question.id} userId={sessionUser.id} /> : <p>Login to see voting</p>}
+                {sessionUser ? (
+                  <UpvotesDisplay
+                    questionId={question.id}
+                    userId={sessionUser.id}
+                  />
+                ) : (
+                  <p>Login to see voting</p>
+                )}
               </div>
             );
         })}
