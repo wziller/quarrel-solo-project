@@ -22,12 +22,8 @@ async function updateVote(id, updatedVote) {
   }
 
 async function deleteVote(id) {
-  const vote = await Vote.findAll({
-    where: {
-      id: id,
-    },
-  });
-  vote[0].destroy();
+  const vote = await Vote.findByPk(id)
+  vote.destroy();
 }
 
 module.exports = {
