@@ -3,7 +3,7 @@ const {Question} = require("./models");
 
 async function create(questionDetails) {
   const question = await Question.create(questionDetails);
-  return question.id;
+  return question;
 }
 
 async function list() {
@@ -11,11 +11,7 @@ async function list() {
   }
 
   async function getQuestion(id) {
-    return await Question.findAll({
-      where:{
-        id:id
-      }
-    });
+    return await Question.findByPk(id);
   }
 
   async function getQuestionByCategory(id) {

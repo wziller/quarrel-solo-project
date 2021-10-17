@@ -1,10 +1,38 @@
-const {Vote} = require("./models");
+const { Vote } = require("./models");
 
 async function getVotes() {
-    return await Vote.findAll();
+  return await Vote.findAll();
+}
+
+async function create(voteDetails) {
+  const vote = await Vote.create(voteDetails);
+  return vote.id;
+}
+
+async function updateVote(id, updatedVote) {
+
+    const vote =  await Vote.update({vote:updatedVote.vote},
+        {
+          where: {id:id},
+          returning:true,
+          plain: true
+        }
+      )
+    return vote;
   }
 
+async function deleteVote(id) {
+  const vote = await Vote.findAll({
+    where: {
+      id: id,
+    },
+  });
+  vote[0].destroy();
+}
 
-  module.exports = {
-      getVotes
-  }
+module.exports = {
+  getVotes,
+  create,
+  updateVote,
+  deleteVote,
+};

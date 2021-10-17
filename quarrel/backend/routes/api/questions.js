@@ -9,7 +9,7 @@ const questionValidations = require("../../validations/questions");
 const router = express.Router();
 
 router.get(
-  "/",
+  "/all",
   asyncHandler(async function (_req, res) {
     const questions = await QuestionRepository.list();
     return res.json(questions);
