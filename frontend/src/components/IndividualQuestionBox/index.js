@@ -18,8 +18,8 @@ function IndividualQuestionBox() {
   const dispatch = useDispatch();
   const votes = useSelector((state) => state.votes.list);
   const users = useSelector((state) => state.users.list);
-
-  const question = useSelector((state) => state?.questions?.list);
+  const currentQuestion = useSelector((state) => state?.questions?.list)
+  const question = currentQuestion[0]
   const sessionUser = useSelector((state) => state.session.user);
   const user_id = sessionUser.id;
   useEffect(() => {
