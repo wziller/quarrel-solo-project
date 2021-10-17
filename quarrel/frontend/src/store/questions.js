@@ -55,7 +55,6 @@ export const createQuestion = (newQuestion) => async (dispatch) => {
 };
 
 export const deleteQuestion = (id) => async (dispatch) => {
-  console.log("delete hit", id.questionId);
   let deleteId = id.questionId;
   const response = await csrfFetch(`/api/questions/${deleteId}`, {
     method: "DELETE",
@@ -68,18 +67,36 @@ export const deleteQuestion = (id) => async (dispatch) => {
 };
 
 export const updateUser2Response = (questionId, update) => async (dispatch) => {
-  await csrfFetch(`/api/questions/${questionId}`, {
+
+
+  const {id} = questionId;
+  const arg = questionId.response;
+  const response = await csrfFetch(`/api/questions/${id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(update),
+    body: JSON.stringify({arg}),
   });
+  if (response.ok) {
+    const newQuestion = await response.json();
+    dispatch(addOneQuestion(newQuestion));
+    return newQuestion
+  }
 };
 
 export const getQuestions = () => async (dispatch) => {
-  const response = await fetch(`/api/questions`);
+  const response = await fetch(`/api/questions/`);
   if (response.ok) {
+    const allQuestionsList = await response.json();
+    dispatch(load(allQuestionsList));
+  }
+};
+
+export const getQuestionsByCategory = (id) => async (dispatch) => {
+  const response = await fetch(`/api/questions/category/${id}`);
+  if (response.ok) {
+
     const allQuestionsList = await response.json();
 
     dispatch(load(allQuestionsList));

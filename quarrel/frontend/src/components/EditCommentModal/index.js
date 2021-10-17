@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import { Modal } from "../../context/Modal";
-import DeleteQuestionButton from "./DeleteQuestionModal";
+import EditCommentButton from "./EditCommentModal";
 
-function DeleteQuestionModal({ questionId }) {
+function EditCommentModal({ commentId,commentBody }) {
   const [showModal, setShowModal] = useState(false);
   return (
     <>
-      <button onClick={() => setShowModal(true)}>Delete Question</button>
+      <button onClick={() => setShowModal(true)}>Edit Comment</button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <DeleteQuestionButton
+          <EditCommentButton
             showModal={setShowModal}
-            questionId={questionId}
+            commentId={commentId}
+            existingCommentBody={commentBody}
           />
         </Modal>
       )}
@@ -19,4 +20,4 @@ function DeleteQuestionModal({ questionId }) {
   );
 }
 
-export default DeleteQuestionModal;
+export default EditCommentModal;

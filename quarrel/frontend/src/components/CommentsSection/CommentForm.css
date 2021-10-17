@@ -1,0 +1,17 @@
+#comment-form{
+    height: 100%;
+    width: 80%;
+
+
+}
+
+#commentSubmit{
+    border:none;
+    background-color: #845ec2;
+}
+
+#commentInput{
+    height: 100px;
+    width: 500px;
+    border:2px solid black;
+}

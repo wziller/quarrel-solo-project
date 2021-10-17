@@ -8,6 +8,7 @@ import { getQuestions } from "../../store/questions";
 import { getUsers } from "../../store/users";
 import commentsReducer, { getComments } from "../../store/comments";
 import { getVotes } from "../../store/votes";
+import CommentsBox from "../CommentsSection";
 import "./IndividualQuestionBox.css";
 
 function IndividualQuestionBox() {
@@ -16,26 +17,15 @@ function IndividualQuestionBox() {
   const dispatch = useDispatch();
   const votes = useSelector((state) => state.votes.list);
   const users = useSelector((state) => state.users.list);
-  const comments = useSelector((state) => state.comments.comments);
-  const question = useSelector((state) => state.questions.list)[0];
-  const sessionUser = useSelector((state) => state.session.user);
-    votes.forEach((vote) => {
-      if (vote.question_id === questionId && vote.user1_vote === true)
-        question.user1_upvotes += 1;
-      if (vote.question_id === questionId && vote.user2_vote === true)
-        question.user2_upvotes += 1;
-    });
 
+  const question = useSelector((state) => state?.questions?.list);
+  const sessionUser = useSelector((state) => state.session.user);
+  const user_id = sessionUser.id;
+  console.log(question)
   useEffect(() => {
     dispatch(getOneQuestion(questionId));
   }, [dispatch]);
-  useEffect(() => {
-    dispatch(getComments(questionId));
-  }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(getVotes());
-  }, [dispatch]);
   useEffect(() => {
     dispatch(getUsers());
   }, [dispatch]);
@@ -60,18 +50,8 @@ function IndividualQuestionBox() {
           </div>
         </div>
       </div>
-      <div>
-        <h2>Comments</h2>
-        {comments.map(comment=>(
-          <div key={comment?.id} className="commentCard">
-            <div className="commentbody">
-              <p>Posted By:</p>
-              <p>{users?.find(user=>user?.id === comment.user_id)?.username}</p>
-              <p>{comment.body}</p>
-            </div>
-          </div>
-        ))}
-      </div>
+      <h2 id="commenttitle">Comments</h2>
+      <CommentsBox userId={user_id} questionId={questionId} />
     </div>
   ) : (<div><p>Error question not found</p></div>);
 }

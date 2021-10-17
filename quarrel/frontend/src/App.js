@@ -5,11 +5,13 @@ import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import MainQuestionsBox from "./components/MainQuestionBox";
+import CategoryQuestionsBox from "./components/CategoryQuestionBox";
 import MyQuestionsPage from "./components/MyQuestionsPage";
 import CategoriesList from "./components/CategoriesList";
 import IndividualQuestionBox from "./components/IndividualQuestionBox/index";
 import TopQuestions from "./components/TopQuestions";
 import MyQuestionsModal from "./components/MyQuestionsPage";
+import './index.css'
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -23,12 +25,23 @@ function App() {
       {isLoaded && (
           <Switch>
             <Route exact path="/">
-              <div id="MainPageContent">
-                <div id="LeftMainDiv">
+              <div className="MainPageContent">
+                <div className="LeftMainDiv">
                   <CategoriesList />
                 </div>
-                <div id="RightMainDiv">
-                  <MainQuestionsBox />
+                <div className="RightMainDiv">
+                  <MainQuestionsBox className="MainQuestionsBox" />
+                  <TopQuestions />
+                </div>
+              </div>
+            </Route>
+            <Route path="/questions/category/:id">
+              <div className="MainPageContent">
+                <div className="LeftMainDiv">
+                  <CategoriesList />
+                </div>
+                <div className="RightMainDiv">
+                  <CategoryQuestionsBox className="MainQuestionsBox" />
                   <TopQuestions />
                 </div>
               </div>

@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
-import {deleteQuestion} from "../../store/questions"
+import {deleteComment} from "../../store/comments"
 
-function DeleteQuestionButton({showModal, questionId}) {
+function DeleteCommentButton({showModal, commentId}) {
   const dispatch = useDispatch();
 
   const handleDeleteClick = (e) => {
     e.preventDefault();
 
-    (dispatch(deleteQuestion({questionId})))
-    showModal(false);
+    return (dispatch(deleteComment({commentId})))
   };
 
   const handleCancelClick = (e) => {
@@ -20,12 +19,12 @@ function DeleteQuestionButton({showModal, questionId}) {
 
   return (
     <div>
-      <h2>Are you sure you want to DELETE this question?</h2>
-      <h3>Deleting Questions is permanent!</h3>
+      <h2>Are you sure you want to DELETE this comment?</h2>
+      <h3>Deleting comments is permanent!</h3>
       <button onClick={handleDeleteClick}>DELETE</button>
       <button onClick={handleCancelClick}>Cancel</button>
     </div>
   )
 }
 
-export default DeleteQuestionButton;
+export default DeleteCommentButton;

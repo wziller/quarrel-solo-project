@@ -4,15 +4,40 @@
     flex-direction: column;
     align-items: center;
 }
+#root > ul{
+    list-style: none;
+}
 
-#MainPageContent{
+.MainQuestionsBox{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items:center;
+}
+
+.MainPageContent{
+    width:100%;
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    justify-content: space-around;
 }
-#LeftMainDiv{
+.LeftMainDiv{
+    display: flex;
+    flex-direction: column;
+    width:20%;
+    align-items: center;
+    align-self: top;
     position: sticky;
+
 }
-#RightScrollingDiv{
+.RightMainDiv{
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    top:0;
+    left:0;
+    padding-left: 200px;
+}
+.RightScrollingDiv{
     display: flex;
 }

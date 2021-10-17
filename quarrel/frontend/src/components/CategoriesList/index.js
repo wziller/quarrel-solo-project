@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink, Link } from "react-router-dom";
 // import { Redirect } from "react-router-dom";
 // import * as sessionActions from "../../store/session";
 import { getCategories } from "../../store/questions";
+import CategoryLinkButton from "./CategoryLinkButton";
 import "./index.css";
 
 function CategoriesList() {
@@ -12,11 +14,11 @@ function CategoriesList() {
         dispatch(getCategories());
       }, [dispatch]);
  return (
-    <div id="mainQuestionsContainer">
+    <div id="CategoriesListContainer">
         <h2>Categories List</h2>
-        {questionCategories.map(category =>
-            <p key={category.id}>{category.name}</p>
-            )}
+        {questionCategories.map(category =>(
+            <CategoryLinkButton key={category.name} name={category.name} id={category.id} />
+        ))}
     </div>
  );
 }

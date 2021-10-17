@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import './ResponseForm.css'
-import updateUser2Response from "../../store/questions"
+import {updateUser2Response} from "../../store/questions"
 
-function ResponseForm({propQuestion}) {
+function ResponseForm({propQuestion, showModal}) {
 
   const dispatch = useDispatch();
   const [response, setResponse] = useState("");
@@ -13,6 +13,7 @@ function ResponseForm({propQuestion}) {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(updateUser2Response({id, response}))
+    showModal(false);
     };
 
   return (

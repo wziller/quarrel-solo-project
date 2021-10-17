@@ -1,0 +1,64 @@
+#CategoriesListContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+#CategoriesListContainer > button {
+  width: 100%;
+}
+a{
+    padding:0px;
+    height:30px;
+    width:100%;
+}
+
+#Automotive,
+#Movies,
+#Television,
+#Sports,
+#Animals,
+#Religion,
+#History,
+#Math,
+#Literature,
+#Video\ Games,
+#Anime,
+#Technology,
+#Politics,
+#Geography,
+#Food,
+#Random
+{
+  width: 100%;
+  border: none;
+  font-size: 12pt;
+  background-color: white;
+  color: black;
+  transition: 1s ease-in-out;
+  background: linear-gradient(to left, white 51%, #d65db9 49%) right;
+  background-size: 200%;
+  transition: 0.5s ease-out;
+  border-radius: 5px;
+  margin: 0px;
+  padding:0px;
+}
+#Automotive:hover,
+#Movies:hover,
+#Television:hover,
+#Sports:hover,
+#Animals:hover,
+#Religion:hover,
+#History:hover,
+#Math:hover,
+#Literature:hover,
+#Video\ Games:hover,
+#Anime:hover,
+#Technology:hover,
+#Politics:hover,
+#Geography:hover,
+#Food:hover,
+#Random:hover {
+  background-position: left;
+  color: white;
+  padding:0px;
+}

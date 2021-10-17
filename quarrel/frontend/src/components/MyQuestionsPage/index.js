@@ -24,14 +24,6 @@ function MyQuestionsPage() {
   const activeQuestions = useSelector((state) => state.questions.active);
   const pendingQuestions = useSelector((state) => state.questions.pending);
 
-  questions.forEach(question =>{
-    const id  = question.id
-    votes.forEach(vote => {
-      if(vote.question_id === id && vote.user1_vote === true) question.user1_upvotes += 1
-      if(vote.question_id === id && vote.user2_vote === true) question.user2_upvotes += 1
-    })
-  })
-
 
   useEffect(() => {
     dispatch(getOneUserCompletedQuestions(id));
@@ -72,7 +64,6 @@ function MyQuestionsPage() {
           <div key={question.id}>
             <div className="MQActiveQuestionCard">
               <h3>{question.question_name}</h3>
-
               <DeleteQuestionModal questionId={question.id} />
               <h5>Question Description:</h5>
               <p>{question.question}</p>

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { Modal } from "../../context/Modal";
-import DeleteQuestionButton from "./DeleteQuestionModal";
+import DeleteCommentButton from "./DeleteCommentModal";
 
-function DeleteQuestionModal({ questionId }) {
+function DeleteCommentModal({ commentId }) {
   const [showModal, setShowModal] = useState(false);
   return (
     <>
-      <button onClick={() => setShowModal(true)}>Delete Question</button>
+      <button onClick={() => setShowModal(true)}>Delete Comment</button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <DeleteQuestionButton
+          <DeleteCommentButton
             showModal={setShowModal}
-            questionId={questionId}
+            commentId={commentId}
           />
         </Modal>
       )}
@@ -19,4 +19,4 @@ function DeleteQuestionModal({ questionId }) {
   );
 }
 
-export default DeleteQuestionModal;
+export default DeleteCommentModal;
