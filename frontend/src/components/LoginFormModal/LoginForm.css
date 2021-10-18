@@ -6,3 +6,21 @@ body{
     height:100%;
     width:100%;
 }
+
+#loginButton {
+    border: none;
+    font-size: 16pt;
+    background-color: white;
+    color: black;
+    transition: 1s ease-in-out;
+    background: linear-gradient(to left, white 50%, #4035d6 50%) right;
+    background-size: 200%;
+    transition: 0.5s ease-out;
+    border-radius: 5px;
+    margin: 5px;
+  }
+
+  #loginButton:hover {
+    background-position: left;
+    color: white;
+  }

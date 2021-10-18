@@ -20,14 +20,11 @@ a{
     flex-direction: column;
 }
 
-.questionOutermostContainer{
-    padding-left: 85px;
-
-}
 .questionCard{
     display: flex;
     flex-direction: column;
     align-items: center;
+    width:80%;
     border: 1px solid black;
     border-radius: 15px;
     margin: 5px;

@@ -1,21 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { Redirect } from "react-router-dom";
-import * as sessionActions from "../../store/session";
+
 import { getQuestions } from "../../store/questions";
 import { getUsers } from "../../store/users";
-import { getVotes } from "../../store/votes";
+
 import AutoComplete from "../Autocomplete/AutoComplete";
 import "./MainQuestionsBox.css";
 
 function MainQuestionsBox() {
   const users = useSelector((state) => state.users.list);
   const dispatch = useDispatch();
-  const allVotes = useSelector((state) => state.votes.list);
-  const sortedVotes = useSelector((state) => state.votes.sorted);
   const questions = useSelector((state) => state.questions.list);
-  const sessionUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
     dispatch(getQuestions());
@@ -26,13 +22,15 @@ function MainQuestionsBox() {
   }, [dispatch]);
 
   return users.length > 0 ? (
-
     <div id="mainQuestionsContainer">
-      <AutoComplete suggestions={usernames} placeholder= "Serach for a question here" changeStateFunc={updateUser2_username}/>
+      <AutoComplete
+        suggestions={usernames}
+        placeholder="Serach for a question here"
+        changeStateFunc={updateUser2_username}
+      />
       <h2>Questions</h2>
       <div>
-
-        { questions.map(
+        {questions.map(
           (question) =>
             question.user1_response && (
               <NavLink key={question.id} to={`/questions/${question.id}`}>

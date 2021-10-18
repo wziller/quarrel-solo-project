@@ -9,7 +9,6 @@ import CategoryQuestionsBox from "./components/CategoryQuestionBox";
 import MyQuestionsPage from "./components/MyQuestionsPage";
 import CategoriesList from "./components/CategoriesList";
 import IndividualQuestionBox from "./components/IndividualQuestionBox/index";
-import TopQuestions from "./components/TopQuestions";
 import './index.css'
 function App() {
   const dispatch = useDispatch();
@@ -39,7 +38,6 @@ function App() {
                 </div>
                 <div className="RightMainDiv">
                   <MainQuestionsBox className="MainQuestionsBox" />
-                  <TopQuestions />
                 </div>
               </div>
             </Route>
@@ -50,7 +48,6 @@ function App() {
                 </div>
                 <div className="RightMainDiv">
                   <CategoryQuestionsBox className="MainQuestionsBox" />
-                  <TopQuestions />
                 </div>
               </div>
             </Route>
