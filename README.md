@@ -2,7 +2,7 @@
 
 
 #Live Server
-https://uncappd-solo.herokuapp.com/
+https://quarrel-wziller.herokuapp.com/
 
 # Development
 * To start the development environment:
