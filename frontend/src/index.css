@@ -15,6 +15,37 @@
     align-items:center;
 }
 
+#williamlinks{
+    display:flex;
+    justify-content: space-between;
+    width: 25%;
+    height: 45px;
+    z-index: 0;
+
+
+
+}
+.linkimages{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    width:40px;
+    z-index: 5;
+}
+#githublogo,
+#linkedinlogo{
+    width:40px;
+    height:40px;
+}
+
+#nameBox{
+    font-size: 26px;
+    width:60%;
+    height:40px;
+    text-align: center;
+    margin:0px;
+}
+
 .MainPageContent{
     width:100%;
     display: flex;

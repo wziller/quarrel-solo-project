@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal } from "../../context/Modal";
 import EditCommentButton from "./EditCommentModal";
 
-function EditCommentModal({ commentId,commentBody }) {
+function EditCommentModal({ commentId,commentBody, changeStateFunc }) {
   const [showModal, setShowModal] = useState(false);
   return (
     <>
@@ -13,6 +13,7 @@ function EditCommentModal({ commentId,commentBody }) {
             showModal={setShowModal}
             commentId={commentId}
             existingCommentBody={commentBody}
+            changeStateFunc={changeStateFunc}
           />
         </Modal>
       )}

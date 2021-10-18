@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Modal } from "../../context/Modal";
 import DeleteCommentButton from "./DeleteCommentModal";
 
-function DeleteCommentModal({ commentId }) {
+function DeleteCommentModal({ commentId, changeStateFunc }) {
   const [showModal, setShowModal] = useState(false);
   return (
     <>
@@ -10,6 +10,7 @@ function DeleteCommentModal({ commentId }) {
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
           <DeleteCommentButton
+            changeStateFunc={changeStateFunc}
             showModal={setShowModal}
             commentId={commentId}
           />

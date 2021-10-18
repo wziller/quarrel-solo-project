@@ -23,12 +23,8 @@ async function list() {
   }
 
   async function deleteQuestion(id) {
-    const question =  await Question.findAll({
-      where:{
-        id:id
-      }
-    });
-    question[0].destroy()
+    const question =  await Question.findByPk(id);
+    question.destroy()
   }
 
   async function updateUser2Response(id, update) {

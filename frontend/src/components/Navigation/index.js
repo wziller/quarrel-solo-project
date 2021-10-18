@@ -1,70 +1,78 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import ProfileButton from './ProfileButton';
-import MyQuestionsButton from './MyQuestionsButton'
-import LoginFormModal from '../LoginFormModal';
-import * as sessionActions from '../../store/session';
-import { getQuestions } from '../../store/questions';
-import Logo from '../Logo'
-import CreateQuestionFormModal from '../CreateQuestionFormModal/index';
-import './Navigation.css';
+import React from "react";
+import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import ProfileButton from "./ProfileButton";
+import MyQuestionsButton from "./MyQuestionsButton";
+import LoginFormModal from "../LoginFormModal";
+import * as sessionActions from "../../store/session";
+import { getQuestions } from "../../store/questions";
+import Logo from "../Logo";
+import CreateQuestionFormModal from "../CreateQuestionFormModal/index";
+import "./Navigation.css";
 
-function Navigation({ isLoaded }){
+function Navigation({ isLoaded }) {
   const dispatch = useDispatch();
-  const sessionUser = useSelector(state => state.session.user);
-  const [ credential, setCredential ] = useState('');
-  const [ password, setPassword ] = useState('');
+  const sessionUser = useSelector((state) => state.session.user);
+  const [credential, setCredential] = useState("");
+  const [password, setPassword] = useState("");
 
   const demoLogin = async () => {
-      setCredential("Demo_User")
-      setPassword("password")
-      return dispatch(sessionActions.login({ credential: "Demo_User", password: "password" }))
-  }
+    setCredential("Demo_User");
+    setPassword("password");
+    return dispatch(
+      sessionActions.login({ credential: "Demo_User", password: "password" })
+    );
+  };
 
   const handleHomeClick = async () => {
-    await dispatch(getQuestions())
-  }
-
+    await dispatch(getQuestions());
+  };
 
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
       <div className="navComponents">
-
         <Logo />
-        <div className='navButtons'>
-
+        <div className="navButtons">
           <NavLink exact to="/">
-            <button className="homeButton" onClick={handleHomeClick}>Home</button>
+            <button className="homeButton" onClick={handleHomeClick}>
+              Home
+            </button>
           </NavLink>
           <ProfileButton user={sessionUser} />
           <CreateQuestionFormModal user={sessionUser} />
           <MyQuestionsButton user={sessionUser} />
         </div>
       </div>
-
     );
   } else {
     sessionLinks = (
-      <>
+      <div className="navComponents">
         <button className="demo-login-button" onClick={demoLogin}>
-              Demo User
+          Demo User
         </button>
         <Logo />
-        <NavLink exact to="/">Home</NavLink>
-        <LoginFormModal />
-        <NavLink to="/signup">Sign Up</NavLink>
-      </>
+        <div className="navButtons">
+          <NavLink exact to="/">
+            <button className="homeButton" onClick={handleHomeClick}>
+              Home
+            </button>
+          </NavLink>
+          <LoginFormModal />
+          <NavLink to="/signup">
+            <button className="homeButton" onClick={handleHomeClick}>
+            Sign Up
+            </button>
+            </NavLink>
+        </div>
+      </div>
     );
   }
 
   return (
     <ul>
-      <li>
-        {isLoaded && sessionLinks}
-      </li>
+      <li>{isLoaded && sessionLinks}</li>
     </ul>
   );
 }

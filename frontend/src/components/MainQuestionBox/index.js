@@ -52,11 +52,11 @@ console.log(searchedQuestion)
         changeStateFunc={updateSearchedQuestion}
       />
       <h2>Questions</h2>
-      <div>
+      <div id="innerQuestionsContiner">
         {questions?.map((question) => {
           if (question.user2_response)
             return (
-              <div key={question.id}>
+              <div className={`questionOutermostContainer`} key={question.id}>
                 <NavLink to={`/questions/${question.id}`}>
                   <div key={question.id} className="questionCard">
                     <h3>{question.question_name}</h3>

@@ -22,13 +22,14 @@ function IndividualQuestionBox() {
   const question = currentQuestion[0]
   const sessionUser = useSelector((state) => state.session.user);
   const user_id = sessionUser.id;
-  useEffect(() => {
-    dispatch(getOneQuestion(questionId));
-  }, [dispatch]);
+  const [stateChangedId, setStateChangedId ] = useState('')
+  useEffect(async () => {
+    await dispatch(getOneQuestion(questionId));
+  }, [dispatch, stateChangedId]);
 
-  useEffect(() => {
-    dispatch(getUsers());
-  }, [dispatch]);
+  useEffect(async() => {
+    await dispatch(getUsers());
+  }, [dispatch, stateChangedId]);
 
    return question? (
     <div id="IndividualQuestionContainer">
@@ -50,7 +51,7 @@ function IndividualQuestionBox() {
       </div>
       <h2 id="commenttitle">Comments</h2>
       {sessionUser ? <UpvotesDisplay questionId={question.id} userId={sessionUser.id} /> : <p>Login to see voting</p>}
-      <CommentsBox userId={user_id} questionId={questionId} />
+      <CommentsBox userId={user_id} questionId={questionId} changeStateFunc={setStateChangedId} />
     </div>
   ) : (<div><p>Error question not found</p></div>);
 }

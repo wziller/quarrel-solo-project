@@ -14,16 +14,12 @@ async function list(id) {
   }
 
   async function deleteComment(id) {
-    const question =  await Comment.findAll({
-      where:{
-        id:id
-      }
-    });
-    question[0].destroy()
+    const comment =  await Comment.findByPk(id);
+    comment.destroy()
   }
 
   async function updateResponse(id, update) {
-    
+
     const {body} = update
     const question =  await Comment.update({body},
         {

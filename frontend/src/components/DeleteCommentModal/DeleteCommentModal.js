@@ -3,13 +3,14 @@ import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import {deleteComment} from "../../store/comments"
 
-function DeleteCommentButton({showModal, commentId}) {
+function DeleteCommentButton({showModal, commentId, changeStateFunc}) {
   const dispatch = useDispatch();
 
   const handleDeleteClick = (e) => {
     e.preventDefault();
-
-    return (dispatch(deleteComment({commentId})))
+    showModal(false);
+    changeStateFunc(commentId.id)
+    dispatch(deleteComment({commentId}))
   };
 
   const handleCancelClick = (e) => {

@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 import { createComment } from "../../store/comments";
 import "./CommentForm.css";
 
-const CommentForm = ({ userId, questionId }) => {
+const CommentForm = ({ userId, questionId, changeStateFunc }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [body, setBody] = useState("");
@@ -19,7 +19,7 @@ const CommentForm = ({ userId, questionId }) => {
       user_id,
       body,
     };
-
+    changeStateFunc(question_id)
     const createdComment = dispatch(createComment(newComment));
     if (createdComment) {
       setBody("");

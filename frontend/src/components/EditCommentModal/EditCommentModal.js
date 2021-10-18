@@ -5,12 +5,11 @@ import { editComment } from "../../store/comments";
 import { useHistory } from "react-router";
 import "./EditCommentModal.css";
 
-function EditCommentButton({ showModal, commentId, existingCommentBody }) {
+function EditCommentButton({ showModal, commentId, existingCommentBody, changeStateFunc }) {
 
   const dispatch = useDispatch();
-  const history = useHistory();
   const [body, setBody] = useState(existingCommentBody);
-  const [comment_id, setcomment_id] = useState(commentId);
+  const [comment_id] = useState(commentId);
   const updateBody = (e) => setBody(e.target.value);
 
   const handleCancelClick = (e) => {
@@ -20,11 +19,13 @@ function EditCommentButton({ showModal, commentId, existingCommentBody }) {
 
   const handleEditClick = (e) => {
     e.preventDefault();
+    changeStateFunc(commentId.id)
     const updatedComment = {
       comment_id,
       body,
     };
-    return dispatch(editComment({ updatedComment }));
+    showModal(false)
+    dispatch(editComment({ updatedComment }));
   };
 
   return (

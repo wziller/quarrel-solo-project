@@ -16,20 +16,18 @@ function CommentsSection({id, questionId}) {
   const comments = useSelector((state) => state.comments.comments);
   const question = useSelector((state) => state.questions.list);
   const sessionUser = useSelector((state) => state.session.user);
-
+  const [commentRemovedByID, setCommentRemovedByID] = useState(0)
   useEffect(() => {
     dispatch(getOneQuestion(questionId));
-  }, [dispatch]);
+  }, [dispatch, commentRemovedByID]);
+
   useEffect(() => {
     dispatch(getComments(questionId));
-  }, [dispatch]);
+  }, [dispatch, commentRemovedByID]);
 
-  // useEffect(() => {
-  //   dispatch(getVotes());
-  // }, [dispatch]);
   useEffect(() => {
     dispatch(getUsers());
-  }, [dispatch]);
+  }, [dispatch, commentRemovedByID]);
 
    return question ? (
       <div>
@@ -39,8 +37,8 @@ function CommentsSection({id, questionId}) {
               <p>Posted By:</p>
               <p>{users?.find(user=>user?.id === comment.user_id)?.username}</p>
               <p>{comment.body}</p>
-              {comment.user_id === sessionUser.id ? <DeleteCommentModal commentId={comment.id} /> : <div></div>}
-              {comment.user_id === sessionUser.id ? <EditCommentModal commentId={comment.id} commentBody={comment.body} /> : <div></div>}
+              {comment.user_id === sessionUser.id ? <DeleteCommentModal commentId={comment.id} changeStateFunc={setCommentRemovedByID} /> : <div></div>}
+              {comment.user_id === sessionUser.id ? <EditCommentModal commentId={comment.id} commentBody={comment.body} changeStateFunc={setCommentRemovedByID} /> : <div></div>}
             </div>
           </div>
         ))}
