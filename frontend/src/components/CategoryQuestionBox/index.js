@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-import * as sessionActions from "../../store/session";
 import { getQuestionsByCategory } from "../../store/questions";
 import { getUsers } from '../../store/users';
-import { getComments } from "../../store/comments";
 import { NavLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { getVotes } from "../../store/votes";
@@ -32,11 +29,11 @@ function CategoryQuestionsBox() {
 
   useEffect(() => {
     dispatch(getVotes());
-  }, [questions]);
+  }, [dispatch, questions]);
 
   useEffect(()=> {
     dispatch(getUsers())
-  },[questions])
+  },[dispatch, questions])
 
   return Array.isArray(questions) && questions ? (
     <div id="mainQuestionsContainer">

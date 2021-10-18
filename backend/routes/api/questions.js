@@ -18,7 +18,7 @@ router.get(
 
 router.post(
   '/',
-  // questionValidations.validateQuestion,
+  questionValidations.validateQuestion,
   asyncHandler(async function (req, res) {
 
     const newQuestion = await QuestionRepository.create(req.body);

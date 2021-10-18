@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as sessionActions from "../../store/session";
 import { getOneQuestion } from "../../store/questions";
 import { getUsers } from "../../store/users";
-import commentsReducer, { getComments } from "../../store/comments";
-import { getVotes } from "../../store/votes";
+import { getComments } from "../../store/comments";
 import DeleteCommentModal from "../DeleteCommentModal";
 import EditCommentModal from "../EditCommentModal";
 import "./CommentsSection.css";
@@ -19,11 +17,11 @@ function CommentsSection({id, questionId}) {
   const [commentRemovedByID, setCommentRemovedByID] = useState(0)
   useEffect(() => {
     dispatch(getOneQuestion(questionId));
-  }, [dispatch, commentRemovedByID]);
+  }, [dispatch, commentRemovedByID, questionId]);
 
   useEffect(() => {
     dispatch(getComments(questionId));
-  }, [dispatch, commentRemovedByID]);
+  }, [dispatch, commentRemovedByID, questionId]);
 
   useEffect(() => {
     dispatch(getUsers());

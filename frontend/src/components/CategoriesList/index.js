@@ -1,8 +1,5 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink, Link } from "react-router-dom";
-// import { Redirect } from "react-router-dom";
-// import * as sessionActions from "../../store/session";
 import { getCategories } from "../../store/questions";
 import CategoryLinkButton from "./CategoryLinkButton";
 import "./index.css";

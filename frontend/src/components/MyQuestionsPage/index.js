@@ -1,10 +1,6 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { Redirect } from "react-router-dom";
-import { useParams } from "react-router-dom";
-import * as sessionActions from "../../store/session";
 import { getOneUserCompletedQuestions } from "../../store/questions";
 import { getOneUserActiveQuestions } from "../../store/questions";
 import { getOneUserPendingQuestions } from "../../store/questions";
@@ -16,9 +12,6 @@ import "./MyQuestionsModal.css";
 
 function MyQuestionsPage() {
   const dispatch = useDispatch();
-  const votes = useSelector((state) => state.votes.list)
-  const questions = useSelector((state) => state.questions.list);
-  const sessionUser = useSelector((state) => state.session.user);
   const {id} = useSelector((state) => state.session.user)
   const completedQuestions = useSelector((state) => state.questions.completed);
   const activeQuestions = useSelector((state) => state.questions.active);

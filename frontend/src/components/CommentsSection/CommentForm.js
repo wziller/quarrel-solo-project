@@ -8,8 +8,8 @@ const CommentForm = ({ userId, questionId, changeStateFunc }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [body, setBody] = useState("");
-  const [user_id, setUser_id] = useState(userId);
-  const [question_id, setquestion_id] = useState(questionId);
+  const [user_id] = useState(userId);
+  const [question_id] = useState(questionId);
   const updateBody = (e) => setBody(e.target.value);
 
   const handleSubmit = async (e) => {

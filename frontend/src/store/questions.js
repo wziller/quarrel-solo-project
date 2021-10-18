@@ -152,13 +152,13 @@ const initialState = {
   categories: [],
 };
 
-const sortList = (list) => {
-  return list
-    .sort((questionA, questionB) => {
-      return questionA.createdAt - questionB.createdAt;
-    })
-    .map((question) => question.id);
-};
+// const sortList = (list) => {
+//   return list
+//     .sort((questionA, questionB) => {
+//       return questionA.createdAt - questionB.createdAt;
+//     })
+//     .map((question) => question.id);
+// };
 
 const questionReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -200,7 +200,7 @@ const questionReducer = (state = initialState, action) => {
         };
         const questionList = newState.list.map((id) => newState[id]);
         questionList.push(action.question);
-        newState.list = sortList(questionList);
+        // newState.list = sortList(questionList);
         return newState;
       }
       return {

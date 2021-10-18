@@ -6,9 +6,9 @@ import { createQuestion } from "../../store/questions";
 import { getCategories } from "../../store/questions";
 import { getUsers } from "../../store/users";
 import { useHistory } from "react-router-dom";
-import { set } from "js-cookie";
 
-const CreateQuestionForm = ({showModal, changeStateFunc}) => {
+
+const CreateQuestionForm = ({showModal}) => {
   const users = useSelector((state) => state.users.list);
   const questionCategories = useSelector((state) => state.questions.categories);
   const dispatch = useDispatch();
@@ -35,7 +35,6 @@ const CreateQuestionForm = ({showModal, changeStateFunc}) => {
   const updateUser2_username =(acInput) =>{
     setUser2_username(acInput)
   }
-  const updateUser2_id = (e) => setUser2_id(e.target.value);
   const updateQuestion = (e) => setQuestion(e.target.value);
   const updateUser1_response = (e) => setUser1_response(e.target.value);
   const updateCategory_id = (e) => setCategory_id(e.target.value);
@@ -70,6 +69,7 @@ const CreateQuestionForm = ({showModal, changeStateFunc}) => {
       deadline,
       complete,
     };
+
 
     const createdQuestion = dispatch(createQuestion(newQuestion));
     if (createdQuestion) {

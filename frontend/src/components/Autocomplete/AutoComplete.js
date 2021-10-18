@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./Autocomplete.css";
 const AutoComplete = ({ suggestions , placeholder, changeStateFunc} ) => {
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);

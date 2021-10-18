@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { editComment } from "../../store/comments";
-import { useHistory } from "react-router";
 import "./EditCommentModal.css";
 
 function EditCommentButton({ showModal, commentId, existingCommentBody, changeStateFunc }) {

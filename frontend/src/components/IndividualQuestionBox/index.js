@@ -1,13 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Redirect } from "react-router-dom";
-import * as sessionActions from "../../store/session";
 import { getOneQuestion } from "../../store/questions";
-import { getQuestions } from "../../store/questions";
 import { getUsers } from "../../store/users";
-import { getComments } from "../../store/comments";
-import { getVotes } from "../../store/votes";
 import UpvotesDisplay from "../Upvotes";
 import CommentsBox from "../CommentsSection";
 import "./IndividualQuestionBox.css";
@@ -16,8 +11,6 @@ function IndividualQuestionBox() {
   const { id } = useParams();
   const questionId = id;
   const dispatch = useDispatch();
-  const votes = useSelector((state) => state.votes.list);
-  const users = useSelector((state) => state.users.list);
   const currentQuestion = useSelector((state) => state?.questions?.list)
   const question = currentQuestion[0]
   const sessionUser = useSelector((state) => state.session.user);

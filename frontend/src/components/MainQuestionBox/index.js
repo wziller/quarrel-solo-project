@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-import * as sessionActions from "../../store/session";
-import { getOneQuestion, getQuestions, updateUser2Response } from "../../store/questions";
+import { getOneQuestion, getQuestions } from "../../store/questions";
 import { getUsers } from "../../store/users";
-import { getComments } from "../../store/comments";
 import { NavLink } from "react-router-dom";
-import { getVotes } from "../../store/votes";
 import AutoComplete from "../Autocomplete/AutoComplete";
 import UpvotesDisplay from "../Upvotes";
 import "./MainQuestionsBox.css";
@@ -18,7 +14,6 @@ function MainQuestionsBox() {
   const questions = useSelector((state) => state.questions.list);
   const sessionUser = useSelector((state) => state.session.user);
   const [searchedQuestion, setSearchedQuestion] = useState("");
-  const [selectedQuestion, setSelectedquestion] = useState({});
   const questionNames = [];
   questions.forEach((question) => {
     questionNames.push(question.question_name);
