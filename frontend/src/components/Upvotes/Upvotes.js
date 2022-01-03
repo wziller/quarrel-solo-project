@@ -51,12 +51,12 @@ const Upvotes = ({ question, userId, userVote, setCount}) => {
   <div className='votes_container'>
     <div className='arrow_container'>
       <i className="fas fa-arrow-circle-up fa-3x grey" onClick={user1Click}></i>
-      {`${user1.username} votes: ${question.user1_upvotes}   `}
+      {`${user1?.username} votes: ${question.user1_upvotes}   `}
     </div>
     <gap></gap>
     <div className='arrow_container'>
       <i className="fas fa-arrow-circle-up fa-3x blue" onClick={user2Click}></i>
-      {`${user2.username} votes: ${question.user2_upvotes}  `}
+      {`${user2?.username} votes: ${question.user2_upvotes}  `}
     </div>
 
   </div>)
@@ -67,11 +67,11 @@ const Upvotes = ({ question, userId, userVote, setCount}) => {
       <div className='votes_container'>
         <div className='arrow_container'>
           <i className="fas fa-arrow-circle-up fa-3x red" onClick={user1Click}></i>
-          {`${user1.username} votes: ${question.user1_upvotes}   `}
+          {`${user1?.username} votes: ${question.user1_upvotes}   `}
         </div>
         <div className='arrow_container'>
           <i className="fas fa-arrow-circle-up fa-3x grey" onClick={user2Click}></i>
-          {`${user2.username} votes: ${question.user2_upvotes}   `}
+          {`${user2?.username} votes: ${question.user2_upvotes}   `}
         </div>
       </div>
      )
@@ -80,11 +80,11 @@ const Upvotes = ({ question, userId, userVote, setCount}) => {
        <div className='votes_container'>
          <div className='arrow_container'>
           <i className="fas fa-arrow-circle-up fa-3x grey" onClick={user1Click}></i>
-          {`${user1.username} votes: ${question.user1_upvotes}`}
+          {`${user1?.username} votes: ${question.user1_upvotes}`}
          </div>
          <div className='arrow_container'>
           <i className="fas fa-arrow-circle-up fa-3x blue" onClick={user2Click}></i>
-          {`${user2.username} votes: ${question.user2_upvotes}`}
+          {`${user2?.username} votes: ${question.user2_upvotes}`}
          </div>
        </div>
       )
