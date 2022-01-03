@@ -77,6 +77,7 @@ export const getUserVote = (questionId, userId) => async (dispatch) => {
 };
 
 export const updateVote = (vote) => async (dispatch) => {
+  vote.vote === 'user1' ? vote.vote = 'user2' : vote.vote = 'user1'
 
   const response = await csrfFetch(`/api/votes/${vote.id}`, {
     method: "PUT",

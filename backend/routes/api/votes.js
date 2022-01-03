@@ -52,7 +52,7 @@ router.get(
       let {id} = req.params
       const vote = await VotesRepository.deleteVote(id);
 
-      return await res.json(id);
+      return vote;
     })
   );
 

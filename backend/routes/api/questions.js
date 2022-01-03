@@ -44,6 +44,23 @@ router.get(
   })
 );
 
+router.put(
+  "/updateTotals/",
+  asyncHandler(async function (req, res) {
+    const questions = await QuestionRepository.updateQuestionTotal();
+    return await res.json(questions);
+  })
+);
+
+router.put(
+  "/:id",
+  asyncHandler(async function (_req, res) {
+    let {id} = _req.params
+    const question = await QuestionRepository.getQuestion(id);
+    return await res.json(question);
+  })
+);
+
 router.delete(
   "/:id",
   asyncHandler(async function (req, res) {
@@ -53,15 +70,7 @@ router.delete(
     return await res.json(question);
   })
 );
-router.put(
-  "/:id",
-  asyncHandler(async function (req, res) {
-    let {id} = req.params
-    let update = req.body
-    const question = await QuestionRepository.updateUser2Response(id, update);
-    return await res.json(question);
-  })
-);
+
 
 
 

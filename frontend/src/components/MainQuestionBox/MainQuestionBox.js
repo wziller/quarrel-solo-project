@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 
-import { getQuestions } from "../../store/questions";
+import { getQuestions, updateVoteTotals } from "../../store/questions";
 import { getUsers } from "../../store/users";
 
 import AutoComplete from "../Autocomplete/AutoComplete";
@@ -15,9 +15,7 @@ function MainQuestionsBox() {
 
   useEffect(() => {
     dispatch(getQuestions());
-  }, [dispatch]);
-
-  useEffect(() => {
+    dispatch(updateVoteTotals())
     dispatch(getUsers());
   }, [dispatch]);
 

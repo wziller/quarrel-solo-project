@@ -112,6 +112,20 @@ export const getOneUserCompletedQuestions = (id) => async (dispatch) => {
   }
 };
 
+export const updateVoteTotals = () => async (dispatch) => {
+  const response = await csrfFetch(`/api/updates/updateTotals/`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (response.ok) {
+    const newQuestionsList = await response.json();
+
+    dispatch(load(newQuestionsList));
+  }
+};
+
 export const getOneUserActiveQuestions = (id) => async (dispatch) => {
   const response = await fetch(`/api/myquestions/user/${id}/active`);
   if (response.ok) {
@@ -152,13 +166,6 @@ const initialState = {
   categories: [],
 };
 
-// const sortList = (list) => {
-//   return list
-//     .sort((questionA, questionB) => {
-//       return questionA.createdAt - questionB.createdAt;
-//     })
-//     .map((question) => question.id);
-// };
 
 const questionReducer = (state = initialState, action) => {
   switch (action.type) {

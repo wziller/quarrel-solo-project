@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOneQuestion, getQuestions } from "../../store/questions";
+import { getOneQuestion, getQuestions, updateVoteTotals } from "../../store/questions";
 import { getUsers } from "../../store/users";
 import { NavLink } from "react-router-dom";
 import AutoComplete from "../Autocomplete/AutoComplete";
 import UpvotesDisplay from "../Upvotes";
+import QuestionCard from "./QuestionCard";
 import "./MainQuestionsBox.css";
 
 function MainQuestionsBox() {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users.list);
 
-  const questions = useSelector((state) => state.questions.list);
+  const questions = useSelector((state) => state.questions.list.sort((a,b)=> a.createdAt - b.createdAt));
   const sessionUser = useSelector((state) => state.session.user);
   const [searchedQuestion, setSearchedQuestion] = useState("");
   const questionNames = [];
@@ -22,7 +23,9 @@ function MainQuestionsBox() {
   const updateSearchedQuestion =(acInput) =>{
     setSearchedQuestion(acInput)
   }
-console.log(searchedQuestion)
+useEffect(()=> {
+  dispatch(updateVoteTotals())
+},[])
 
 
   useEffect(()=> {
@@ -46,51 +49,14 @@ console.log(searchedQuestion)
         placeholder="Search for a question here"
         changeStateFunc={updateSearchedQuestion}
       />
-      <h2>Questions</h2>
-      <div id="innerQuestionsContiner">
-        {questions?.map((question) => {
-          if (question.user2_response)
-            return (
-              <div className={`questionOutermostContainer`} key={question.id}>
-                <NavLink to={`/questions/${question.id}`}>
-                  <div key={question.id} className="questionCard">
-                    <h3>{question.question_name}</h3>
-                    <h4 id="descriptiontitle">Question Description</h4>
-                    <p>{question.question}</p>
-                    <div className="responses">
-                      <div className="user_1Response">
-                        <p>{`${
-                          users?.find((user) => user.id === question.user1_id)
-                            ?.username
-                        } argues:`}</p>
-                        {question.user1_response}
-                      </div>
-                      <div className="user_2Response">
-                        <p>{`${
-                          users?.find((user) => user.id === question.user2_id)
-                            ?.username
-                        } argues:`}</p>
-                        {question.user2_response}
-                      </div>
-                    </div>
-                  </div>
-                </NavLink>
-                {sessionUser ? (
-                  <UpvotesDisplay
-                    questionId={question.id}
-                    userId={sessionUser.id}
-                  />
-                ) : (
-                  <p>Login to see voting</p>
-                )}
-              </div>
-            );
-        })}
-      </div>
+      {questions.map(question => (
+        <div className='single_question_main'>
+          <QuestionCard question = {question}/>
+          {sessionUser ? <UpvotesDisplay question ={question} userId = {sessionUser.id}/> : <p>Login to see how users voted!</p>}
+        </div>
+      ))}
     </div>
-  ) : (
-    <div></div>
-  );
+  ): (<div>
+  </div>)
 }
-
 export default MainQuestionsBox;
