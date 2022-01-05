@@ -25,11 +25,14 @@ https://quarrel-wziller.herokuapp.com/
 * Git/Github
 
 # Features
-* To start the development environment:
   1. Social Upvote System
-     https://wziller-personal-portfolio.s3.us-east-2.amazonaws.com/project-images/quarrel-upvote-screen.PNG
+     ![Alt text](https://wziller-personal-portfolio.s3.us-east-2.amazonaws.com/project-images/quarrel-upvote-screen.PNG)
+     Includes a React component for dynamically "upvoting" the user's favorite answer. It also displayss the current vote totals so viewers can see the current winner.
+     
   2. User Questions Page
-     https://wziller-personal-portfolio.s3.us-east-2.amazonaws.com/project-images/quarrel-my-questions-screenshot.PNG
+     ![Alt text](https://wziller-personal-portfolio.s3.us-east-2.amazonaws.com/project-images/quarrel-my-questions-screenshot.PNG)
+     A user is able to view the current questions they have been challenged with answering. These questions are divided into three categories completed, active, and pending.          These are dynamically sorted when a question's status changes.
   3. New Question Modal with Auto Complete Feature
-     https://wziller-personal-portfolio.s3.us-east-2.amazonaws.com/project-images/quarrel-new-question-screenshot.PNG
+     ![Alt text](https://wziller-personal-portfolio.s3.us-east-2.amazonaws.com/project-images/quarrel-new-question-screenshot.PNG)
+     A modal component is displayed when a user decides to add a new question. This includes an autocomplete compnent that allows a user to search other users to challenge with their new question.
   
