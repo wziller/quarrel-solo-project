@@ -16,13 +16,6 @@ function MainQuestionsBox() {
   const questions = useSelector((state) => state.questions.list);
   const sessionUser = useSelector((state) => state.session.user);
 
-  useEffect(() => {
-    dispatch(getQuestions());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(getVotes());
-  }, [dispatch]);
   useEffect(()=> {
     dispatch(getUsers())
   },[dispatch])
@@ -30,7 +23,6 @@ function MainQuestionsBox() {
   return Array.isArray(questions) && questions ? (
     <div id="mainQuestionsContainer">
       <h2>Questions</h2>
-      <div>
         {questions?.map((question) => {
           if (question.user2_response)
             return (
@@ -63,7 +55,6 @@ function MainQuestionsBox() {
             );
         })}
       </div>
-    </div>
   ) : (
     <div></div>
   );

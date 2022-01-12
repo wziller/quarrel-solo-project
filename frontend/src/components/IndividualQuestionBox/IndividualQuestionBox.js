@@ -45,7 +45,6 @@ function IndividualQuestionBox() {
   return (
     <div id="IndividualQuestionContainer">
       <h2>Question</h2>
-      <div>
         <div key={question.id} className="questionCard">
           <h3>{question.question_name}</h3>
           <h4 id="descriptiontitle">Question Description</h4>
@@ -61,7 +60,6 @@ function IndividualQuestionBox() {
             </div>
           </div>
         </div>
-      </div>
     </div>
   );
 }

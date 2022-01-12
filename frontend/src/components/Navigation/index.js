@@ -26,7 +26,7 @@ function Navigation({ isLoaded }) {
   };
 
   const handleHomeClick = async () => {
-    await dispatch(getQuestions());
+    dispatch(getQuestions());
   };
 
   let sessionLinks;

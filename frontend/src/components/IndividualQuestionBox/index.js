@@ -8,20 +8,19 @@ import CommentsBox from "../CommentsSection";
 import "./IndividualQuestionBox.css";
 
 function IndividualQuestionBox() {
-  const { id } = useParams();
-  const questionId = id;
+  const questionId = useParams().id;
   const dispatch = useDispatch();
-  const currentQuestion = useSelector((state) => state?.questions?.list)
-  const question = currentQuestion[0]
+  const questions = useSelector((state) => state?.questions?.list)
+  const question = questions.find((question) => { return question.id == questionId})
   const sessionUser = useSelector((state) => state.session.user);
   const user_id = sessionUser.id;
   const [stateChangedId, setStateChangedId ] = useState('')
   useEffect(async () => {
-    await dispatch(getOneQuestion(questionId));
+    dispatch(getOneQuestion(questionId));
   }, [dispatch, stateChangedId]);
 
   useEffect(async() => {
-    await dispatch(getUsers());
+    dispatch(getUsers());
   }, [dispatch, stateChangedId]);
 
    return question? (
@@ -43,7 +42,7 @@ function IndividualQuestionBox() {
         </div>
       </div>
       <h2 id="commenttitle">Comments</h2>
-      {sessionUser ? <UpvotesDisplay questionId={question.id} userId={sessionUser.id} /> : <p>Login to see voting</p>}
+      {sessionUser ? <UpvotesDisplay question={question} userId={sessionUser.id}  /> : <p>Login to see voting</p>}
       <CommentsBox userId={user_id} questionId={questionId} changeStateFunc={setStateChangedId} />
     </div>
   ) : (<div><p>Error question not found</p></div>);

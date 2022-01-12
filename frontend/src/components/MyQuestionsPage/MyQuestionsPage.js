@@ -45,10 +45,6 @@ function MyQuestionsPage() {
     dispatch(getOneUserPendingQuestions(id));
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(getVotes());
-  }, [dispatch]);
-
   useEffect(()=> {
     dispatch(getUsers())
   },[dispatch])

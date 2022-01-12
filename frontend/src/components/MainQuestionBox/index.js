@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getOneQuestion, getQuestions, updateVoteTotals } from "../../store/questions";
 import { getUsers } from "../../store/users";
+import { getVotes } from "../../store/votes";
 import { NavLink } from "react-router-dom";
 import AutoComplete from "../Autocomplete/AutoComplete";
 import UpvotesDisplay from "../Upvotes";
@@ -34,8 +35,8 @@ useEffect(()=> {
 
   useEffect(async() => {
     await dispatch(getUsers());
-    await dispatch(getQuestions());
-  }, [dispatch]);
+    dispatch(getVotes())
+  }, []);
 
   useEffect(async()=>{
     const questionId = await questions?.find(question=> question.question_name === searchedQuestion)

@@ -27,9 +27,7 @@ function CategoryQuestionsBox() {
     dispatch(getQuestionsByCategory(categoryId));
   }, [dispatch, categoryId]);
 
-  useEffect(() => {
-    dispatch(getVotes());
-  }, [dispatch, questions]);
+
 
   useEffect(()=> {
     dispatch(getUsers())
@@ -38,9 +36,8 @@ function CategoryQuestionsBox() {
   return Array.isArray(questions) && questions ? (
     <div id="mainQuestionsContainer">
       <h2>Questions</h2>
-      <div>
         {questions?.map((question) => {
-          if (question.user2_response)
+          if (question.category_id == categoryId && question.user2_response)
             return (
               <div key={question.id}>
                 <NavLink  to={`/questions/${question.id}`}>
@@ -66,12 +63,11 @@ function CategoryQuestionsBox() {
                     </div>
                   </div>
                 </NavLink>
-                {sessionUser ? <UpvotesDisplay questionId={question.id} userId={sessionUser.id} /> : <p>Login to see voting</p>}
+                {sessionUser ? <UpvotesDisplay question={question} userId={sessionUser.id} /> : <p>Login to see voting</p>}
               </div>
             );
         })}
       </div>
-    </div>
   ) : (
     <div></div>
   );

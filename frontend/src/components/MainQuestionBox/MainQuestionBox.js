@@ -14,10 +14,10 @@ function MainQuestionsBox() {
   const questions = useSelector((state) => state.questions.list);
 
   useEffect(() => {
-    dispatch(getQuestions());
+    dispatch(getQuestions())
     dispatch(updateVoteTotals())
     dispatch(getUsers());
-  }, [dispatch]);
+  }, []);
 
   return users.length > 0 ? (
     <div id="mainQuestionsContainer">
@@ -27,7 +27,7 @@ function MainQuestionsBox() {
         changeStateFunc={updateUser2_username}
       />
       <h2>Questions</h2>
-      <div>
+
         {questions.map(
           (question) =>
             question.user1_response && (
@@ -52,7 +52,6 @@ function MainQuestionsBox() {
             )
         )}
       </div>
-    </div>
   ) : (
     <div></div>
   );
