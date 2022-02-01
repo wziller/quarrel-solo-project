@@ -9,9 +9,16 @@ const questionValidations = require("../../validations/questions");
 const router = express.Router();
 
 router.get(
-  "/",
-  asyncHandler(async function (_req, res) {
-    const questions = await QuestionRepository.list();
+  "/all/:id",
+  asyncHandler(async function (req, res) {
+    let {id} = req.params
+    let questions = await QuestionRepository.list(id);
+
+  //   let newQuestions = await questions.map( async question => {
+  //     let upvotes = await QuestionRepository.getUpvotes(question.id, id)
+  //     question.upVotes = upvotes;
+  //   })
+
     return res.json(questions);
   })
 );
@@ -36,10 +43,11 @@ router.get(
 );
 
 router.get(
-  "/:id",
-  asyncHandler(async function (_req, res) {
-    let {id} = _req.params
-    const question = await QuestionRepository.getQuestion(id);
+  "/question/:questionId/user/:userId",
+  asyncHandler(async function (req, res) {
+    let {questionId} = req.params
+    let {userId} = req.params
+    const question = await QuestionRepository.getQuestion(questionId, userId);
     return await res.json(question);
   })
 );
@@ -70,10 +78,5 @@ router.delete(
     return await res.json(question);
   })
 );
-
-
-
-
-
 
 module.exports = router

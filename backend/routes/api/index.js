@@ -7,6 +7,7 @@ const commentsRouter = require('./comments.js')
 const updatesRouter = require('./updates.js')
 const myquestionsRouter =require('./myquestions')
 const categoriesRouter = require('./categories.js')
+const upvotesRouter = require('./upvote_component')
 
 router.use('/session', sessionRouter);
 
@@ -23,5 +24,7 @@ router.use(`/categories`, categoriesRouter)
 router.use('/myquestions', myquestionsRouter)
 
 router.use('/updates', updatesRouter)
+
+router.use('/upvotes', upvotesRouter)
 
 module.exports = router;

@@ -6,7 +6,7 @@ async function getVotes() {
 
 async function create(voteDetails) {
   const vote = await Vote.create(voteDetails);
-  return vote.id;
+  return vote;
 }
 
 async function updateVote(id, updatedVote) {
@@ -20,6 +20,7 @@ async function updateVote(id, updatedVote) {
       )
     return vote;
   }
+  
   async function getUserVote(questionId, userId) {
     return await Vote.findAll({
       where:{
@@ -31,7 +32,9 @@ async function updateVote(id, updatedVote) {
 
 async function deleteVote(id) {
   const vote = await Vote.findByPk(id)
-  vote.destroy();
+  if(vote === null) return
+  await vote.destroy();
+  return vote;
 }
 
 module.exports = {
