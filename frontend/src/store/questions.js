@@ -85,10 +85,11 @@ export const updateUser2Response = (questionId, update) => async (dispatch) => {
   }
 };
 
-export const getQuestions = () => async (dispatch) => {
-  const response = await fetch(`/api/questions/`);
+export const getQuestions = (id) => async (dispatch) => {
+  const response = await fetch(`/api/questions/all/${id}`);
   if (response.ok) {
     const allQuestionsList = await response.json();
+    console.log("allQuestionsList====================>", allQuestionsList)
     dispatch(load(allQuestionsList));
   }
 };
@@ -122,7 +123,7 @@ export const updateVoteTotals = () => async (dispatch) => {
   if (response.ok) {
     const newQuestionsList = await response.json();
 
-    dispatch(load(newQuestionsList));
+    // dispatch(load(newQuestionsList));
   }
 };
 

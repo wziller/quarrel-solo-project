@@ -7,6 +7,7 @@ const ADD_ONE = "votes/ADD_ONE";
 const LOAD_USER_VOTE = "votes/LOAD_USER_VOTE"
 const REMOVE_VOTE = "votes/REMOVE_VOTE";
 const UPDATE_VOTE = "votes/UPDATE_VOTE";
+const LOAD_UPVOTES = "votes/LOAD_UPVOTES"
 
 const load = (sorted, list) => ({
   type: LOAD,
@@ -37,6 +38,11 @@ const addOneVote = (vote) => ({
   vote,
 });
 
+const loadUpvotes = (payload) => ({
+  type: LOAD_UPVOTES,
+  payload,
+})
+
 export const getVotes = () => async (dispatch) => {
   const response = await fetch(`/api/votes`);
   if (response.ok) {
@@ -51,6 +57,12 @@ export const getVotes = () => async (dispatch) => {
     await dispatch(load(newVotesList, allVotesList));
   }
 };
+
+export const getUpvotes = (questionId, userId) => async (dispatch) =>{
+  const response = await csrfFetch(`/api/upvotes/question/${questionId}/user/${userId}`)
+  const upVotesData = await response.json()
+  dispatch(loadUpvotes(upVotesData));
+}
 
 export const createVote = (newVote) => async (dispatch) => {
   const response = await csrfFetch(`/api/votes/`, {
@@ -93,9 +105,9 @@ export const updateVote = (vote) => async (dispatch) => {
   }
 };
 
-export const deleteVote = (vote) => async (dispatch) => {
+export const deleteVote = (id) => async (dispatch) => {
 
-  const response = await fetch(`/api/votes/${vote.id}`, {
+  const response = await fetch(`/api/votes/${id}`, {
     method: "DELETE",
   });
 
@@ -131,6 +143,12 @@ const votesReducer = (state = initialState, action) => {
         userVote: action.vote,
       };
     }
+    case LOAD_UPVOTES: {
+      return{
+        ...state,
+        currentUpvotes: action.payload
+      }
+    }
     case ADD_ONE: {
       if (!state[action.vote.id]) {
         const newState = {
@@ -141,7 +159,6 @@ const votesReducer = (state = initialState, action) => {
         voteList.push(action.vote);
         return newState;
       }
-
       return {
         ...state,
         [action.vote.id]: {
