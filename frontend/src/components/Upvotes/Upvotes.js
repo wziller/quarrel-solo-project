@@ -56,7 +56,50 @@ const Upvotes = ({ question, userId}) => {
     dispatch(getOneQuestion(question.id,userId))
   }
     handleChange()
-    dispatch(updateOneQuestionVoteTotals(question.id))
+  }
+
+  const user2Click = async () => {
+
+    const handleChange = async() =>{
+
+    if(userVote === null){
+      let newVote ={
+        vote:'user2',
+        user_id:userId,
+        question_id:question.id,
+      }
+      upVoteData.total2++
+      upVoteData.userVote = 'user2'
+      setUser2ArrowColor('blue')
+      await dispatch(createVote(newVote))
+    }
+
+    if(userVote === 'user2'){
+      upVoteData.total2--
+      upVoteData.userVote = null
+      setUser2ArrowColor('grey')
+      await dispatch(deleteVote(userVoteId))
+    }
+
+    if(userVote === 'user1'){
+      let currentVote ={
+        vote:userVote,
+        id:userVoteId,
+        user_id:userId,
+        question_id:question.id,
+      }
+      upVoteData.total2++
+      upVoteData.total1--
+      upVoteData.userVote = 'user2'
+      setUser2ArrowColor('blue')
+      setUser1ArrowColor('grey')
+      await dispatch(updateVote(currentVote))
+    }
+
+
+    dispatch(getOneQuestion(question.id,userId))
+  }
+    handleChange()
   }
 
   useEffect(()=> {
@@ -78,7 +121,7 @@ const Upvotes = ({ question, userId}) => {
         <div className="arrow_container">
           <i
             className={`fas fa-arrow-circle-up fa-3x ${user2ArrowColor}`}
-            // onClick={user2Click}
+            onClick={user2Click}
           ></i>
           {`${user2} votes: ${upVoteData.total2}  `}
         </div>
