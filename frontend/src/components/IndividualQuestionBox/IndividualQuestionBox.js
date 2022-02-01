@@ -16,7 +16,7 @@ function IndividualQuestionBox() {
   const votes = useSelector((state) => state.votes.list);
   const questions = useSelector((state) => state.questions.list);
   const question = questions.find((question) => question.id === questionId);
-  const sessionUser = useSelector((state) => state.session.user);
+  const sessionUser = useSelector((state) => state.session?.user);
   questions.forEach((question) => {
     const id = question.id;
     votes.forEach((vote) => {
@@ -27,13 +27,7 @@ function IndividualQuestionBox() {
     });
   });
 
-  useEffect(() => {
-    dispatch(getOneQuestion(questionId));
-  }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(getQuestions());
-  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getVotes());

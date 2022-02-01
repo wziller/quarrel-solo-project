@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
-import { getQuestions } from "../../store/questions";
 import { getUsers } from '../../store/users';
 import { getVotes } from "../../store/votes";
 import UpvotesDisplay from "../Upvotes";

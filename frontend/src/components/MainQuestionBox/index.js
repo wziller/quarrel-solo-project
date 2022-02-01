@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getOneQuestion, getQuestions, updateVoteTotals } from "../../store/questions";
+import { getQuestions, getOneQuestion, updateVoteTotals } from "../../store/questions";
 import { getUsers } from "../../store/users";
 import { getVotes } from "../../store/votes";
 import { NavLink } from "react-router-dom";
@@ -34,8 +34,9 @@ useEffect(()=> {
   }, [searchedQuestion])
 
   useEffect(async() => {
-    await dispatch(getUsers());
+    dispatch(getUsers());
     dispatch(getVotes())
+    dispatch(getQuestions(sessionUser?.id))
   }, []);
 
   useEffect(async()=>{

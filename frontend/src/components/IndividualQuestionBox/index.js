@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { getOneQuestion } from "../../store/questions";
+import { getOneQuestion, getQuestions } from "../../store/questions";
 import { getUsers } from "../../store/users";
 import UpvotesDisplay from "../Upvotes";
 import CommentsBox from "../CommentsSection";
 import "./IndividualQuestionBox.css";
+
 
 function IndividualQuestionBox() {
   const questionId = useParams().id;
@@ -13,16 +14,12 @@ function IndividualQuestionBox() {
   const questions = useSelector((state) => state?.questions?.list)
   const question = questions.find((question) => { return question.id == questionId})
   const sessionUser = useSelector((state) => state.session.user);
-  const user_id = sessionUser.id;
-  const [stateChangedId, setStateChangedId ] = useState('')
-  useEffect(async () => {
-    dispatch(getOneQuestion(questionId));
-  }, [dispatch, stateChangedId]);
+  const user_id = sessionUser?.id;
 
-  useEffect(async() => {
-    dispatch(getUsers());
-  }, [dispatch, stateChangedId]);
 
+  useEffect(() => {
+    dispatch(getQuestions(sessionUser?.id));
+  }, []);
    return question? (
     <div id="IndividualQuestionContainer">
       <h2>Question</h2>
@@ -43,7 +40,7 @@ function IndividualQuestionBox() {
       </div>
       <h2 id="commenttitle">Comments</h2>
       {sessionUser ? <UpvotesDisplay question={question} userId={sessionUser.id}  /> : <p>Login to see voting</p>}
-      <CommentsBox userId={user_id} questionId={questionId} changeStateFunc={setStateChangedId} />
+      <CommentsBox userId={user_id} questionId={questionId} />
     </div>
   ) : (<div><p>Error question not found</p></div>);
 }

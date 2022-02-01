@@ -2,15 +2,22 @@ import { bindActionCreators } from "redux";
 import { csrfFetch } from "./csrf";
 
 const LOAD = "questions/LOAD";
+const LOAD_ONE = "questions/LOAD_ONE";
 const LOAD_COMPLETED = "questions/LOAD_COMPLETED";
 const LOAD_ACTIVE = "questions/LOAD_ACTIVE";
 const LOAD_PENDING = "questions/LOAD_PENDING";
 const ADD_ONE = "questions/ADD_ONE";
 const LOAD_CATEGORIES = "questions/LOAD_CATEGORIES";
+const LOAD_NEW_QUESTION_TOTALS = "questions/LOAD_NEW_QUESTION_TOTALS"
 
 const load = (list) => ({
   type: LOAD,
   list,
+});
+
+const loadOne = (payload) => ({
+  type: LOAD_ONE,
+  payload,
 });
 
 const loadCompleted = (list) => ({
@@ -37,6 +44,11 @@ const addOneQuestion = (question) => ({
   type: ADD_ONE,
   question,
 });
+const loadNewQuestionTotals=(payload) =>({
+  type: LOAD_NEW_QUESTION_TOTALS,
+  payload
+})
+
 
 export const createQuestion = (newQuestion) => async (dispatch) => {
   const response = await csrfFetch(`/api/questions/`, {
@@ -89,7 +101,6 @@ export const getQuestions = (id) => async (dispatch) => {
   const response = await fetch(`/api/questions/all/${id}`);
   if (response.ok) {
     const allQuestionsList = await response.json();
-    console.log("allQuestionsList====================>", allQuestionsList)
     dispatch(load(allQuestionsList));
   }
 };
@@ -127,6 +138,19 @@ export const updateVoteTotals = () => async (dispatch) => {
   }
 };
 
+export const updateOneQuestionVoteTotals = (questionId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/updates/updateTotals/${questionId}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  if (response.ok) {
+    const updatedQuestion = await response.json();
+    dispatch(loadNewQuestionTotals(updatedQuestion))
+  }
+};
+
 export const getOneUserActiveQuestions = (id) => async (dispatch) => {
   const response = await fetch(`/api/myquestions/user/${id}/active`);
   if (response.ok) {
@@ -145,12 +169,12 @@ export const getOneUserPendingQuestions = (id) => async (dispatch) => {
   }
 };
 
-export const getOneQuestion = (id) => async (dispatch) => {
-  const response = await fetch(`/api/questions/${id}`);
+export const getOneQuestion = (questionId, userId) => async (dispatch) => {
+  const response = await fetch(`/api/questions/question/${questionId}/user/${userId}`);
   if (response.ok) {
     const question = await response.json();
     const res = [question]
-    dispatch(load(res));
+    dispatch(loadOne(res));
   }
 };
 
@@ -176,6 +200,15 @@ const questionReducer = (state = initialState, action) => {
         list: action.list,
       };
     }
+    case LOAD_ONE: {
+      let currentState = {...state}
+      let currentQuestion = currentState.list.find(question=>question.id === action.payload.id)
+      console.log("hit==================>",currentQuestion)
+      currentQuestion = action.payload
+      return{
+        ...currentState
+      }
+    }
     case LOAD_COMPLETED: {
       return {
         ...state,
@@ -199,6 +232,16 @@ const questionReducer = (state = initialState, action) => {
         ...state,
         categories: action.categories,
       };
+    }
+    case LOAD_NEW_QUESTION_TOTALS: {
+      let currentState = {...state}
+
+      let currentQuestion = currentState.list.find(question=>question.id === action.payload.id)
+      currentQuestion.upVotes.total1 = currentQuestion.user1_upvotes
+      currentQuestion.upVotes.total2 = currentQuestion.user2_upvotes
+      return{
+        ...currentState
+      }
     }
     case ADD_ONE: {
       if (!state[action.question.id]) {

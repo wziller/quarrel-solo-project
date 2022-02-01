@@ -12,9 +12,10 @@ function MainQuestionsBox() {
   const users = useSelector((state) => state.users.list);
   const dispatch = useDispatch();
   const questions = useSelector((state) => state.questions.list);
+  const sessionUser = useSelector((state) => state.session?.user);
 
   useEffect(() => {
-    dispatch(getQuestions())
+    dispatch(getQuestions(sessionUser?.id))
     dispatch(updateVoteTotals())
     dispatch(getUsers());
   }, []);

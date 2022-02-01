@@ -1,134 +1,90 @@
 import React, { useEffect, useState, updateState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getQuestions, updateVoteTotals } from "../../store/questions";
-import { getVotes } from "../../store/votes";
+import { getQuestions, getOneQuestion, updateVoteTotals, updateOneQuestionVoteTotals } from "../../store/questions";
 import { createVote, deleteVote, updateVote } from "../../store/votes";
-import DeleteQuestionButton from "../DeleteQuestionModal/DeleteQuestionModal";
 import "./upvotes.css";
-const Upvotes = ({ question, userId, userVote, setUserVote }) => {
-  const dispatch = useDispatch();
-  const users = useSelector((state) => state.users.list);
-  const questionId = question?.id;
-  const user1 = users.find((user) => user.id === question?.user1_id);
-  const user2 = users.find((user) => user.id === question?.user2_id);
-  const [user1UpvoteTotals, setUser1UpvoteTotals] = useState(question?.user1_upvotes)
-  const [user2UpvoteTotals, setUser2UpvoteTotals] = useState(question?.user2_upvotes)
-  const user1Click = () => {
 
-    if (!userVote) {
-      console.log("uservotte===========>", userVote)
-      const newVote = {
-        vote: "user1",
-        user_id: userId,
-        question_id: questionId,
-      };
-      setUserVote(dispatch(createVote({ newVote })));
-      dispatch(updateVoteTotals());
-      dispatch(getQuestions())
-      setUser1UpvoteTotals(question.user1_upvotes)
-      setUser2UpvoteTotals(question.user2_upvotes)
-      return
+const Upvotes = ({ question, userId}) => {
+  const dispatch = useDispatch()
+  const upVoteData = question.upVotes
+  const user1 = upVoteData?.userName1
+  const user2 = upVoteData?.userName2
+  const userVote = upVoteData?.userVote
+  const userVoteId = upVoteData?.userVoteId
+  const[user1ArrowColor, setUser1ArrowColor] = useState(userVote === "user1" ? "red" : "grey")
+  const[user2ArrowColor, setUser2ArrowColor] = useState(userVote === "user2" ? "blue" : "grey")
+
+  const user1Click = async () => {
+
+    const handleChange = async() =>{
+
+    if(userVote === null){
+      let newVote ={
+        vote:'user1',
+        user_id:userId,
+        question_id:question.id,
+      }
+      upVoteData.total1++
+      upVoteData.userVote = 'user1'
+      setUser1ArrowColor('red')
+      await dispatch(createVote(newVote))
     }
-    userVote && userVote.vote === "user1"
-      ? dispatch(deleteVote(userVote))
-      : dispatch(updateVote(userVote));
-    dispatch(updateVoteTotals());
-    setUser1UpvoteTotals(question.user1_upvotes)
-    setUser2UpvoteTotals(question.user2_upvotes)
-  };
 
-  const user2Click = () => {
-
-    if (!userVote) {
-      console.log("uservotte===========>", userVote)
-      const newVote = {
-        vote: "user2",
-        user_id: userId,
-        question_id: questionId,
-      };
-      dispatch(createVote({ newVote }));
-      dispatch(updateVoteTotals());
-      setUser1UpvoteTotals(question.user1_upvotes)
-      setUser2UpvoteTotals(question.user2_upvotes)
-      return
+    if(userVote === 'user1'){
+      upVoteData.total1--
+      upVoteData.userVote = null
+      setUser1ArrowColor('grey')
+      await dispatch(deleteVote(userVoteId))
     }
-    userVote && userVote.vote === "user2"
-      ? dispatch(deleteVote(userVote))
-      : dispatch(updateVote(userVote));
-    dispatch(updateVoteTotals());
-    setUser1UpvoteTotals(question.user1_upvotes)
-    setUser2UpvoteTotals(question.user2_upvotes)
-  };
 
-  useEffect(() => {
-    dispatch(getQuestions());
-  }, [updateVoteTotals, deleteVote, updateVote, createVote]);
+    if(userVote === 'user2'){
+      let currentVote ={
+        vote:userVote,
+        id:userVoteId,
+        user_id:userId,
+        question_id:question.id,
+      }
+      upVoteData.total1++
+      upVoteData.total2--
+      upVoteData.userVote = 'user1'
+      setUser1ArrowColor('red')
+      setUser2ArrowColor('grey')
+      await dispatch(updateVote(currentVote))
+    }
+
+
+    dispatch(getOneQuestion(question.id,userId))
+  }
+    handleChange()
+    dispatch(updateOneQuestionVoteTotals(question.id))
+  }
+
   useEffect(()=> {
 
-  },[dispatch, setUser1UpvoteTotals, setUser2UpvoteTotals])
+  },[user1ArrowColor, user2ArrowColor])
 
-  if (!userVote)
-    return (
+
+
+    return ( userVote !== undefined ?
       <div className="votes_container">
         <div className="arrow_container">
           <i
-            className="fas fa-arrow-circle-up fa-3x grey"
+            className={`fas fa-arrow-circle-up fa-3x ${user1ArrowColor}`}
             onClick={user1Click}
           ></i>
-          {`${user1?.username} votes: ${user1UpvoteTotals}   `}
+          {`${user1} votes: ${upVoteData.total1}   `}
         </div>
         <gap></gap>
         <div className="arrow_container">
           <i
-            className="fas fa-arrow-circle-up fa-3x grey"
-            onClick={user2Click}
+            className={`fas fa-arrow-circle-up fa-3x ${user2ArrowColor}`}
+            // onClick={user2Click}
           ></i>
-          {`${user2?.username} votes: ${user2UpvoteTotals}  `}
+          {`${user2} votes: ${upVoteData.total2}  `}
         </div>
       </div>
-    );
+    : <div>Loading</div>);
 
-  switch (userVote.vote) {
-    case "user1":
-      return (
-        <div className="votes_container">
-          <div className="arrow_container">
-            <i
-              className="fas fa-arrow-circle-up fa-3x red"
-              onClick={user1Click}
-            ></i>
-            {`${user1?.username} votes: ${user1UpvoteTotals}   `}
-          </div>
-          <div className="arrow_container">
-            <i
-              className="fas fa-arrow-circle-up fa-3x grey"
-              onClick={user2Click}
-            ></i>
-            {`${user2?.username} votes: ${user2UpvoteTotals}   `}
-          </div>
-        </div>
-      );
-    case "user2":
-      return (
-        <div className="votes_container">
-          <div className="arrow_container">
-            <i
-              className="fas fa-arrow-circle-up fa-3x grey"
-              onClick={user1Click}
-            ></i>
-            {`${user1?.username} votes: ${user1UpvoteTotals}`}
-          </div>
-          <div className="arrow_container">
-            <i
-              className="fas fa-arrow-circle-up fa-3x blue"
-              onClick={user2Click}
-            ></i>
-            {`${user2?.username} votes: ${user2UpvoteTotals}`}
-          </div>
-        </div>
-      );
-    default:
-  }
 };
 
 export default Upvotes;
