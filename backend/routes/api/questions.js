@@ -34,10 +34,13 @@ router.post(
 );
 
 router.get(
-  "/category/:id",
+  "/category/:categoryId/user/:userId",
   asyncHandler(async function (_req, res) {
-    let {id} = _req.params
-    const questions = await QuestionRepository.getQuestionByCategory(id);
+    let {categoryId} = _req.params
+    console.log("CATEGORYID======================================>", categoryId)
+    let {userId} = _req.params
+    console.log("USERID======================================>", userId)
+    const questions = await QuestionRepository.getQuestionByCategory(categoryId, userId);
     return await res.json(questions);
   })
 );

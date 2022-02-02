@@ -54,7 +54,7 @@ async function getQuestion(questionId, userId) {
   let currentUserVote = votes.find((vote) => {
     return vote.user_id == Number(userId) && vote.question_id == question.id;
   });
-  
+
   let userVote = currentUserVote ? currentUserVote.vote : null;
 
   let userVoteId = currentUserVote ? currentUserVote.id : null;
@@ -70,12 +70,43 @@ async function getQuestion(questionId, userId) {
   return question;
 }
 
-async function getQuestionByCategory(id) {
-  return await Question.findAll({
+async function getQuestionByCategory(categoryId,userId) {
+
+  let newQuestions = [];
+  let questions = await Question.findAll({
     where: {
-      category_id: id,
+      category_id: categoryId,
     },
+    order: [["createdAt", "DESC"]],
+    raw: true,
   });
+  let users = await User.findAll();
+  let votes = await Vote.findAll();
+  questions.forEach(async (question) => {
+    question.upVotes = "test";
+    let userName1 = users.find((user) => user.id === question.user1_id);
+    let userName2 = users.find((user) => user.id === question.user2_id);
+    let total1 = question.user1_upvotes;
+    let total2 = question.user2_upvotes;
+    let currentUserVote = votes.find((vote) => {
+      return vote.user_id == Number(userId) && vote.question_id == question.id;
+    });
+
+    let userVote = currentUserVote ? currentUserVote.vote : null;
+
+    let userVoteId = currentUserVote ? currentUserVote.id : null;
+    question.upVotes = {
+      userName1: userName1.username,
+      userName2: userName2.username,
+      total1,
+      total2,
+      userVote,
+      userVoteId,
+    };
+    newQuestions.push(question);
+  });
+
+  return newQuestions;
 }
 
 async function deleteQuestion(id) {
