@@ -6,7 +6,7 @@ import "./index.css";
 
 function CategoriesList() {
     const questionCategories = useSelector(state => state.questions.categories);
-    const userId = useSelector(state=> state?.session?.user.id)
+    const userId = useSelector(state=> state?.session?.user?.id)
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getCategories());
