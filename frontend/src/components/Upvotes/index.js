@@ -8,8 +8,6 @@ import { updateVoteTotals } from "../../store/questions";
 const UpvotesDisplay = ({ question, userId }) => {
   const dispatch = useDispatch();
 
-  
-
   return (
     <div className="upvotesDisplayContainer">
       <Upvotes

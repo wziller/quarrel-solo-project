@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ProfileButton from "./ProfileButton";
+import SignupFormModal from "../SignupFormModal";
 import MyQuestionsButton from "./MyQuestionsButton";
 import LoginFormModal from "../LoginFormModal";
 import * as sessionActions from "../../store/session";
@@ -20,7 +21,7 @@ function Navigation({ isLoaded }) {
   const demoLogin = async () => {
     setCredential("Demo_User");
     setPassword("password");
-    return dispatch(
+    dispatch(
       sessionActions.login({ credential: "Demo_User", password: "password" })
     );
   };
@@ -60,11 +61,8 @@ function Navigation({ isLoaded }) {
             </button>
           </NavLink>
           <LoginFormModal />
-          <NavLink to="/signup">
-            <button className="homeButton" onClick={handleHomeClick}>
-            Sign Up
-            </button>
-            </NavLink>
+          <SignupFormModal className='signUpButton'/>
+
         </div>
       </div>
     );

@@ -105,8 +105,9 @@ export const getQuestions = (id) => async (dispatch) => {
   }
 };
 
-export const getQuestionsByCategory = (id) => async (dispatch) => {
-  const response = await fetch(`/api/questions/category/${id}`);
+export const getQuestionsByCategory = (categoryId, userId) => async (dispatch) => {
+  console.log("USERID=================>",userId)
+  const response = await fetch(`/api/questions/category/${categoryId}/user/${userId}`);
   if (response.ok) {
 
     const allQuestionsList = await response.json();

@@ -33,7 +33,7 @@ useEffect(()=> {
 
   }, [searchedQuestion])
 
-  useEffect(async() => {
+  useEffect(() => {
     dispatch(getUsers());
     dispatch(getVotes())
     dispatch(getQuestions(sessionUser?.id))
@@ -52,7 +52,7 @@ useEffect(()=> {
         changeStateFunc={updateSearchedQuestion}
       />
       {questions.map(question => (
-        <div className='single_question_main'>
+        <div key={`mainQuestion ${question.id}`} className='single_question_main'>
           <QuestionCard question = {question}/>
           {sessionUser ? <UpvotesDisplay question ={question} userId = {sessionUser.id}/> : <p>Login to see how users voted!</p>}
         </div>

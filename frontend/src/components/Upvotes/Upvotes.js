@@ -51,8 +51,6 @@ const Upvotes = ({ question, userId}) => {
       setUser2ArrowColor('grey')
       await dispatch(updateVote(currentVote))
     }
-
-
     dispatch(getOneQuestion(question.id,userId))
   }
     handleChange()
@@ -71,6 +69,7 @@ const Upvotes = ({ question, userId}) => {
       upVoteData.total2++
       upVoteData.userVote = 'user2'
       setUser2ArrowColor('blue')
+
       await dispatch(createVote(newVote))
     }
 
@@ -100,12 +99,18 @@ const Upvotes = ({ question, userId}) => {
     dispatch(getOneQuestion(question.id,userId))
   }
     handleChange()
+
+
   }
 
   useEffect(()=> {
-
+    
   },[user1ArrowColor, user2ArrowColor])
 
+  useEffect(()=> {
+    setUser1ArrowColor(userVote === "user1" ? "red" : "grey")
+    setUser2ArrowColor(userVote === "user2" ? "blue" : "grey")
+  },[userId])
 
 
     return ( userVote !== undefined ?
@@ -117,7 +122,6 @@ const Upvotes = ({ question, userId}) => {
           ></i>
           {`${user1} votes: ${upVoteData.total1}   `}
         </div>
-        <gap></gap>
         <div className="arrow_container">
           <i
             className={`fas fa-arrow-circle-up fa-3x ${user2ArrowColor}`}

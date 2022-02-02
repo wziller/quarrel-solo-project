@@ -16,7 +16,8 @@ box-shadow: 5px 5px rgba(0, 0, 0, 0.2);
 #mainCommentContainer{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    width: fit-content;
+  
     justify-content: space-evenly;
 }
 #commentInputContainer {

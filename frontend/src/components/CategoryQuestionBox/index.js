@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { getVotes } from "../../store/votes";
 import UpvotesDisplay from "../Upvotes";
+import CategoryQuestionCard from "./CategoryQuestionCard";
 import "./CategoryQuestionsBox.css";
 
 function CategoryQuestionsBox() {
@@ -24,7 +25,7 @@ function CategoryQuestionsBox() {
   })
 
   useEffect(() => {
-    dispatch(getQuestionsByCategory(categoryId));
+    dispatch(getQuestionsByCategory(categoryId, sessionUser.id));
   }, [dispatch, categoryId]);
 
 
@@ -39,30 +40,8 @@ function CategoryQuestionsBox() {
         {questions?.map((question) => {
           if (question.category_id == categoryId && question.user2_response)
             return (
-              <div key={question.id}>
-                <NavLink  to={`/questions/${question.id}`}>
-                  <div key={question.id} className="questionCard">
-                    <h3>{question.question_name}</h3>
-                    <h4 id="descriptiontitle">Question Description</h4>
-                    <p>{question.question}</p>
-                    <div className="responses">
-                      <div className="user_1Response">
-                        <p>{`${
-                          users?.find((user) => user.id === question.user1_id)
-                            ?.username
-                        } argues:`}</p>
-                        {question.user1_response}
-                      </div>
-                      <div className="user_2Response">
-                        <p>{`${
-                          users?.find((user) => user.id === question.user2_id)
-                            ?.username
-                        } argues:`}</p>
-                        {question.user2_response}
-                      </div>
-                    </div>
-                  </div>
-                </NavLink>
+              <div className= "single_question_main" key={question.id}>
+                <CategoryQuestionCard question={question}/>
                 {sessionUser ? <UpvotesDisplay question={question} userId={sessionUser.id} /> : <p>Login to see voting</p>}
               </div>
             );

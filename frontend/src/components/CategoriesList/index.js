@@ -6,6 +6,7 @@ import "./index.css";
 
 function CategoriesList() {
     const questionCategories = useSelector(state => state.questions.categories);
+    const userId = useSelector(state=> state?.session?.user.id)
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getCategories());
@@ -14,7 +15,7 @@ function CategoriesList() {
     <div id="CategoriesListContainer">
         <h2>Categories List</h2>
         {questionCategories.map(category =>(
-            <CategoryLinkButton key={category.name} name={category.name} id={category.id} />
+            <CategoryLinkButton key={category.name} name={category.name} categoryId={category.id} userId />
         ))}
     </div>
  );
